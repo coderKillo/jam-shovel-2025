@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://bifqmlemht8b2"]
+
+[ext_resource type="PackedScene" uid="uid://4brssbq1ghsw" path="res://addons/maaacks_game_template/extras/scenes/overlaid_menus/game_won_menu.tscn" id="1_y33ao"]
+[ext_resource type="Script" uid="uid://b76ctvfa8lv82" path="res://scenes/overlaid_menus/game_won_menu.gd" id="2_o0fkt"]
+[ext_resource type="Theme" uid="uid://dvw2fe07fhjwu" path="res://resources/themes/lore.tres" id="2_uvhaa"]
+
+[node name="GameWonMenu" instance=ExtResource("1_y33ao")]
+theme = ExtResource("2_uvhaa")
+script = ExtResource("2_o0fkt")
