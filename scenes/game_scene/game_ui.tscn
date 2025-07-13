@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://buehqtg6ecocd"]
+[gd_scene load_steps=12 format=3 uid="uid://buehqtg6ecocd"]
 
 [ext_resource type="Script" uid="uid://cyh0d64pfygbl" path="res://addons/maaacks_game_template/base/scripts/pause_menu_controller.gd" id="1_onvsj"]
 [ext_resource type="PackedScene" uid="uid://b51ffq7jnmic5" path="res://scenes/overlaid_menus/pause_menu.tscn" id="2_onvsj"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bifqmlemht8b2" path="res://scenes/overlaid_menus/game_won_menu.tscn" id="8_3re04"]
 [ext_resource type="PackedScene" uid="uid://cvr36eb0r2bje" path="res://scenes/overlaid_menus/level_lost_menu.tscn" id="9_ascoc"]
 [ext_resource type="PackedScene" uid="uid://fi7nwkte06g2" path="res://scenes/overlaid_menus/level_won_menu.tscn" id="10_wr4n6"]
+[ext_resource type="PackedScene" uid="uid://dtohfdo7t336y" path="res://game/test/test_level.tscn" id="11_8qp3c"]
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -61,3 +62,5 @@ audio_listener_enable_3d = true
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 script = ExtResource("6_bmy5n")
+
+[node name="TestLevel" parent="ViewportContainer" instance=ExtResource("11_8qp3c")]
