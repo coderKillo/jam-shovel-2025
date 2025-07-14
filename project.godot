@@ -89,6 +89,7 @@ locale/translations=PackedStringArray("res://addons/maaacks_game_template/base/t
 2d_physics/layer_3="objects"
 2d_physics/layer_4="ground"
 2d_physics/layer_5="walls"
+2d_physics/layer_6="spawn"
 
 [maaacks_game_template]
 
