@@ -103,6 +103,7 @@ func _break(delta):
 func _launch(_delta):
 	_tacho = clamp(_tacho, 0.0, TACHO_MAX)
 	_speed = (_tacho / TACHO_MAX) * MAX_SPEED
+	_heat = _heat * (HEAT_RESET_PERCENT / 100)
 	_current_state = PlayerState.ENGINE_ON
 	Engine.time_scale = 1.0
 

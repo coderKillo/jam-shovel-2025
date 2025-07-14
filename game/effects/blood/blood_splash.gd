@@ -11,3 +11,4 @@ func _ready():
 	offset.x = OFFSETS[index]
 
 	await animation_finished
+	queue_free()

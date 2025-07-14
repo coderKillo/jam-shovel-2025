@@ -25,6 +25,7 @@ signal died
 var _varient = 0
 var _action_running := false
 var _speed = 0
+var _direction = -1
 
 
 func _ready():
@@ -35,20 +36,25 @@ func _ready():
 func _physics_process(delta):
 	velocity += get_gravity() * delta
 
-	velocity.x = -_speed
+	velocity.x = _direction * _speed
 	move_and_slide()
 
 	if not _action_running:
+		_action_running = true
 		_update_animation()
 
 
 func _update_animation():
-	if (randi() % 100) <= 10:
-		_action_running = true
+	animation.flip_h = _direction == -1
+
+	if (randi() % 100) <= 50:
 		var action = ACTIONS.pick_random()
 		_play_animation(action)
+		_speed = 0
+		_direction = [1, -1].pick_random()
 	else:
 		_play_animation("walk")
+		_speed = SPEED
 
 
 func _play_animation(animation_name: String):
@@ -56,7 +62,7 @@ func _play_animation(animation_name: String):
 
 
 func _on_animation_looped():
-	_action_running = true
+	_action_running = false
 
 
 func kill():

@@ -217,4 +217,5 @@ offset_right = 40.23
 offset_bottom = 126.0
 grow_vertical = 2
 theme = ExtResource("4_1eg78")
+fill_mode = 3
 show_percentage = false
