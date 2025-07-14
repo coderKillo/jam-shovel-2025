@@ -1,14 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://dtohfdo7t336y"]
+[gd_scene load_steps=7 format=4 uid="uid://dtohfdo7t336y"]
 
 [ext_resource type="Script" uid="uid://dtdmrs4widckx" path="res://game/world/level.gd" id="1_m34n8"]
-[ext_resource type="Script" uid="uid://d0tlyt7dkp07u" path="res://game/entities/player/player.gd" id="1_yxj06"]
-[ext_resource type="Texture2D" uid="uid://ddlxl6g0s7l8b" path="res://assets/FreePixelMeleeWeaponPack/FreePixelMeleeWeaponPack.png" id="2_qvk7o"]
+[ext_resource type="PackedScene" uid="uid://5kyqpec60060" path="res://game/entities/player/player.tscn" id="2_le6fd"]
 [ext_resource type="Texture2D" uid="uid://bssa31wpfutpx" path="res://assets/TileSet Apocalypse Base/TileSet Apocalypse Base.png" id="3_1eg78"]
 [ext_resource type="Theme" uid="uid://d1hgaet22gba2" path="res://addons/maaacks_game_template/examples/resources/themes/lore.tres" id="4_1eg78"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4v6r"]
-radius = 4.0
-height = 42.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m34n8"]
 texture = ExtResource("3_1eg78")
@@ -161,20 +156,8 @@ sources/0 = SubResource("TileSetAtlasSource_m34n8")
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_m34n8")
 
-[node name="Player" type="CharacterBody2D" parent="."]
-collision_mask = 30
-script = ExtResource("1_yxj06")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-position = Vector2(-3, -2)
-texture = ExtResource("2_qvk7o")
-region_enabled = true
-region_rect = Rect2(260, 38, 51, 19)
-region_filter_clip_enabled = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_f4v6r")
+[node name="Player" parent="." instance=ExtResource("2_le6fd")]
+position = Vector2(1, 39)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(135, 2)

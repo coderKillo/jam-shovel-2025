@@ -1,0 +1,109 @@
+[gd_scene load_steps=14 format=3 uid="uid://5kyqpec60060"]
+
+[ext_resource type="Script" uid="uid://d0tlyt7dkp07u" path="res://game/entities/player/player.gd" id="1_gqtae"]
+[ext_resource type="Texture2D" uid="uid://bk3yen8ulgx3n" path="res://assets/self-made/player-sprite-sheet.png" id="2_x4rrl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
+atlas = ExtResource("2_x4rrl")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxwbg"]
+atlas = ExtResource("2_x4rrl")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5imf"]
+atlas = ExtResource("2_x4rrl")
+region = Rect2(64, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o3a5"]
+atlas = ExtResource("2_x4rrl")
+region = Rect2(128, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8wnn"]
+atlas = ExtResource("2_x4rrl")
+region = Rect2(192, 64, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqodr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjd1f")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxwbg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5imf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o3a5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8wnn")
+}],
+"loop": true,
+"name": &"on",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f4v6r"]
+radius = 4.0
+height = 42.0
+
+[sub_resource type="Gradient" id="Gradient_le6fd"]
+colors = PackedColorArray(1, 0.916, 0.28, 1, 1, 0, 0, 0.207843)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6matv"]
+gradient = SubResource("Gradient_le6fd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_thxgm"]
+particle_flag_disable_z = true
+direction = Vector3(-1, -0.5, 0)
+spread = 20.0
+initial_velocity_min = 361.5
+initial_velocity_max = 511.5
+gravity = Vector3(0, 200, 0)
+color_ramp = SubResource("GradientTexture1D_6matv")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gqtae"]
+radius = 4.0
+height = 22.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 28
+script = ExtResource("1_gqtae")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_hqodr")
+animation = &"on"
+autoplay = "off"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f4v6r")
+
+[node name="Particales" type="GPUParticles2D" parent="."]
+position = Vector2(18, 4)
+emitting = false
+amount = 30
+lifetime = 0.2
+fixed_fps = 0
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_thxgm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+position = Vector2(10, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_gqtae")
+debug_color = Color(0.955325, 0.132016, 0.422449, 0.42)

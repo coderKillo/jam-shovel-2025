@@ -3,7 +3,9 @@ extends CharacterBody2D
 
 enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, ENGINE_STARTED, OVERHEAT }
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+@onready var particales: GPUParticles2D = $Particales
+@onready var hitbox: Area2D = $Hitbox
 
 const JUMP_VELOCITY = -400.0
 
@@ -33,11 +35,18 @@ var _tacho := 0.0:
 var _speed := 0.0
 
 
+func _ready():
+	hitbox.body_entered.connect(_on_hitbox_hit)
+
+
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	_update_rotation()
+	_speed = velocity.x
+
+	_update_animation()
+	_update_particles()
 
 	match _current_state:
 		PlayerState.IDLE:
@@ -69,7 +78,6 @@ func _physics_process(delta):
 		_:
 			pass
 
-	print(_speed)
 	_speed = clamp(_speed, 0, MAX_SPEED)
 	velocity.x = _speed
 
@@ -106,7 +114,8 @@ func _starting(delta):
 
 func _move_normal(delta):
 	_speed += ACCELERATION * delta
-	_heat += HEAT_BUILD_BOOST * delta
+	if _speed > 10.0:
+		_heat += HEAT_BUILD_BOOST * delta
 
 
 func _move_boost(delta):
@@ -138,8 +147,30 @@ func _set_heat(value):
 	return _heat
 
 
-func _update_rotation():
+func _update_animation():
 	if not is_on_floor() and _current_state == PlayerState.ENGINE_OFF:
-		sprite.rotation_degrees = -40
+		animation.rotation_degrees = -40
 	else:
-		sprite.rotation_degrees = 0
+		animation.rotation_degrees = 0
+
+	if _current_state == PlayerState.ENGINE_ON:
+		animation.play("on")
+	if _current_state == PlayerState.ENGINE_OFF:
+		animation.play("off")
+
+
+func _update_particles():
+	if _speed < (SPEED / 10.0) or not is_on_floor():
+		particales.emitting = false
+	else:
+		particales.emitting = true
+		particales.process_material.initial_velocity_max = _speed * 1.3
+		particales.process_material.initial_velocity_min = _speed * 0.7
+
+
+func _on_hitbox_hit(body):
+	var enemy := body as Enemy
+	if not enemy:
+		return
+
+	enemy.kill()
