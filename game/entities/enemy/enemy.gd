@@ -67,6 +67,7 @@ func _on_animation_looped():
 
 func kill():
 	died.emit()
+	Events.enemy_killed.emit()
 
 	var blood_splash = blood_splash_scene.instantiate()
 	get_parent().add_child(blood_splash)

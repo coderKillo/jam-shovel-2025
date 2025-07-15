@@ -59,8 +59,11 @@ func _physics_process(delta):
 				_break(delta)
 
 		PlayerState.ENGINE_STARTED:
-			if Input.is_action_just_pressed("jump") or _tacho < 0.0:
+			if Input.is_action_just_pressed("jump"):
 				_launch(delta)
+			elif _tacho < 0.0:
+				_launch(delta)
+				_launch_failed()
 			else:
 				_starting(delta)
 
@@ -106,6 +109,10 @@ func _launch(_delta):
 	_heat = _heat * (HEAT_RESET_PERCENT / 100)
 	_current_state = PlayerState.ENGINE_ON
 	Engine.time_scale = 1.0
+
+
+func _launch_failed():
+	Events.engine_start_failed.emit()
 
 
 func _starting(delta):
