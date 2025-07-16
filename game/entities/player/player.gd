@@ -7,24 +7,30 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, ENGINE_STARTED, OVERHEAT }
 @onready var particales: GPUParticles2D = $Particales
 @onready var hitbox: Area2D = $Hitbox
 
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -500.0
 
-const SPEED = 300.0
-const ACCELERATION = 400.0
-const DEACCELERATION = 400.0
+const SPEED = 200.0
 const MAX_SPEED = 800.0
 
-const TACHO_CHANGE_RATE = 10.0
-const TACHO_MAX = 5.0
+const TACHO_MAX = 1.0
+const TACHO_MIN = 0.0
+const TACHO_THRESHOLD_HEAT = 0.7
+const TACHO_THRESHOLD_COOL = 0.5
+const TACHO_ACCELERATION = 1.5
+const TACHO_DEACCELERATION = 1.0
 
-const HEAT_BUILD_BOOST = 30.0
-const HEAT_BUILD_NORMAL = 10.0
-const HEAT_BUILD_KILL = 5.0
+const HEAT_BUILD_STARTING = 100.0
+const HEAT_BUILD_HIGH_TACHO = 30.0
+const HEAT_BUILD_KILL = 0.0
+const HEAT_RELEASE_IN_AIR = 80.0
+const HEAT_RELEASE_LOW_TACHO = 30.0
 const HEAT_MAX = 100.0
 const HEAT_RESET_PERCENT = 25.0
 
+const SLOWMOTION_FACTOR = 0.3
+
 var _current_state := PlayerState.IDLE
-var _current_tacho_change_rate := TACHO_CHANGE_RATE
+var _acceleration := false
 
 var _heat := 0.0:
 	set = _set_heat
@@ -53,25 +59,22 @@ func _physics_process(delta):
 			_init_player()
 
 		PlayerState.ENGINE_OFF:
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_pressed("move_right"):
 				_start_engine(delta)
-			else:
+			elif is_on_floor():
 				_break(delta)
 
 		PlayerState.ENGINE_STARTED:
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_released("move_right"):
 				_launch(delta)
-			elif _tacho < 0.0:
-				_launch(delta)
-				_launch_failed()
 			else:
 				_starting(delta)
 
 		PlayerState.ENGINE_ON:
 			if Input.is_action_pressed("move_right") and is_on_floor():
-				_move_normal(delta)
-			else:
 				_move_boost(delta)
+			else:
+				_move_normal(delta)
 
 			if Input.is_action_just_pressed("jump") and is_on_floor():
 				_jump(delta)
@@ -81,6 +84,9 @@ func _physics_process(delta):
 		_:
 			pass
 
+	_update_heat(delta)
+	_update_speed(delta)
+
 	_speed = clamp(_speed, 0, MAX_SPEED)
 	velocity.x = _speed
 
@@ -89,24 +95,26 @@ func _physics_process(delta):
 	## Handle Player State
 
 
+func is_starting():
+	return _current_state == PlayerState.ENGINE_STARTED
+
+
 func _init_player():
+	_tacho = 0
+	_heat = 0
 	_current_state = PlayerState.ENGINE_OFF
 
 
 func _start_engine(_delta):
-	_tacho = 0.0
-	_current_tacho_change_rate = TACHO_CHANGE_RATE
 	_current_state = PlayerState.ENGINE_STARTED
+	Engine.time_scale = SLOWMOTION_FACTOR
 
 
 func _break(delta):
-	_speed -= DEACCELERATION * delta
+	_tacho -= TACHO_DEACCELERATION * delta
 
 
 func _launch(_delta):
-	_tacho = clamp(_tacho, 0.0, TACHO_MAX)
-	_speed = (_tacho / TACHO_MAX) * MAX_SPEED
-	_heat = _heat * (HEAT_RESET_PERCENT / 100)
 	_current_state = PlayerState.ENGINE_ON
 	Engine.time_scale = 1.0
 
@@ -116,19 +124,16 @@ func _launch_failed():
 
 
 func _starting(delta):
-	_tacho += delta * _current_tacho_change_rate
-	Engine.time_scale = 0.6
+	_tacho += (TACHO_ACCELERATION / SLOWMOTION_FACTOR) * delta
 
 
 func _move_normal(delta):
-	_speed += ACCELERATION * delta
-	if _speed > 10.0:
-		_heat += HEAT_BUILD_BOOST * delta
+	var new_speed = lerp(_speed, SPEED, delta)
+	_tacho = (new_speed / MAX_SPEED) * TACHO_MAX
 
 
 func _move_boost(delta):
-	_heat += HEAT_BUILD_NORMAL * delta
-	_speed = lerp(_speed, SPEED, delta)
+	_tacho += TACHO_ACCELERATION * delta
 
 
 func _jump(_delta):
@@ -143,16 +148,34 @@ func _overheat(_delta):
 
 
 func _set_tacho(value):
-	_tacho = value
-	if _tacho > TACHO_MAX:
-		_current_tacho_change_rate = -TACHO_CHANGE_RATE
+	_acceleration = value > _tacho
+	_tacho = clamp(value, TACHO_MIN, TACHO_MAX)
 
 
 func _set_heat(value):
-	_heat = value
-	if _heat > HEAT_MAX:
+	_heat = clamp(value, 0, HEAT_MAX)
+	if _heat >= HEAT_MAX:
 		_current_state = PlayerState.OVERHEAT
 	return _heat
+
+
+func _update_heat(delta):
+	if _tacho > TACHO_THRESHOLD_HEAT:
+		if _current_state == PlayerState.ENGINE_STARTED:
+			_heat += HEAT_BUILD_STARTING * delta / SLOWMOTION_FACTOR
+		elif _acceleration:
+			_heat += HEAT_BUILD_HIGH_TACHO * delta
+	elif _tacho < TACHO_THRESHOLD_COOL:
+		_heat -= HEAT_RELEASE_LOW_TACHO * delta
+
+	if _current_state == PlayerState.ENGINE_OFF and not is_on_floor():
+		_heat -= HEAT_RELEASE_IN_AIR * delta
+
+
+func _update_speed(_delta):
+	if _current_state == PlayerState.ENGINE_STARTED:
+		return
+	_speed = (_tacho / TACHO_MAX) * MAX_SPEED
 
 
 func _update_animation():
@@ -181,4 +204,5 @@ func _on_hitbox_hit(body):
 	if not enemy:
 		return
 
+	_heat += HEAT_BUILD_KILL
 	enemy.kill()
