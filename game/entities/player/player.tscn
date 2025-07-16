@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://5kyqpec60060"]
+[gd_scene load_steps=15 format=3 uid="uid://5kyqpec60060"]
 
 [ext_resource type="Script" uid="uid://d0tlyt7dkp07u" path="res://game/entities/player/player.gd" id="1_gqtae"]
 [ext_resource type="Texture2D" uid="uid://bk3yen8ulgx3n" path="res://assets/self-made/player-sprite-sheet.png" id="2_x4rrl"]
@@ -76,6 +76,9 @@ color_ramp = SubResource("GradientTexture1D_6matv")
 radius = 4.0
 height = 22.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqtae"]
+size = Vector2(4, 3.99997)
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 28
 script = ExtResource("1_gqtae")
@@ -109,3 +112,14 @@ collision_mask = 2
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_gqtae")
 debug_color = Color(0.955325, 0.132016, 0.422449, 0.42)
+
+[node name="WallHitbox" type="Area2D" parent="."]
+position = Vector2(10, 0)
+collision_layer = 0
+collision_mask = 28
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallHitbox"]
+position = Vector2(11, 0)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_gqtae")
+debug_color = Color(0, 0.644813, 0.273308, 0.42)

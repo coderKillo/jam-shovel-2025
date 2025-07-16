@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxqp0qk3fyvo6"]
+
+[ext_resource type="Texture2D" uid="uid://mfumerx4lv2j" path="res://assets/Wasteland City - Parallax Background/WCP_1.png" id="1_iyovw"]
+[ext_resource type="Texture2D" uid="uid://dvc2aiq4vf6v7" path="res://assets/Wasteland City - Parallax Background/WCP_2.png" id="2_upw84"]
+[ext_resource type="Texture2D" uid="uid://btnsb8phkmtul" path="res://assets/Wasteland City - Parallax Background/WCP_3.png" id="3_h7ypb"]
+[ext_resource type="Texture2D" uid="uid://dfpxoeqn4y7qb" path="res://assets/Wasteland City - Parallax Background/WCP_4.png" id="4_xstdg"]
+[ext_resource type="Texture2D" uid="uid://cnatv675uy0v0" path="res://assets/Wasteland City - Parallax Background/WCP_5.png" id="5_638y7"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Parallax2D1" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.05, 1)
+scroll_offset = Vector2(0, -84.29)
+repeat_size = Vector2(1080, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D1"]
+texture = ExtResource("1_iyovw")
+region_enabled = true
+region_rect = Rect2(0, -8, 1080, 508)
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 1)
+scroll_offset = Vector2(0, -28.385)
+repeat_size = Vector2(1080, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2"]
+texture = ExtResource("2_upw84")
+
+[node name="Parallax2D3" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 1)
+scroll_offset = Vector2(0, -110)
+repeat_size = Vector2(1080, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3"]
+texture = ExtResource("3_h7ypb")
+
+[node name="Parallax2D4" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.4, 1)
+scroll_offset = Vector2(0, -200.84)
+repeat_size = Vector2(1080, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D4"]
+texture = ExtResource("4_xstdg")
+
+[node name="Parallax2D5" type="Parallax2D" parent="."]
+scroll_offset = Vector2(0, -160)
+repeat_size = Vector2(1080, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D5"]
+texture = ExtResource("5_638y7")
+region_rect = Rect2(0, 0, 1080, 496)

@@ -6,6 +6,7 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERH
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particales: GPUParticles2D = $Particales
 @onready var hitbox: Area2D = $Hitbox
+@onready var wall_hitbox: Area2D = $WallHitbox
 
 const JUMP_VELOCITY = -500.0
 
@@ -46,6 +47,7 @@ var _speed := 0.0
 
 func _ready():
 	hitbox.body_entered.connect(_on_hitbox_hit)
+	wall_hitbox.body_entered.connect(_on_wall_hitbox_hit)
 
 
 func _physics_process(delta):
@@ -234,3 +236,7 @@ func _on_hitbox_hit(body):
 
 	Events.camera_freez_frame.emit()
 	Events.camera_shake.emit(0.4)
+
+
+func _on_wall_hitbox_hit(body):
+	Events.player_hit_wall.emit()
