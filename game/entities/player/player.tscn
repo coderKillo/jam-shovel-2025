@@ -1,7 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://5kyqpec60060"]
+[gd_scene load_steps=19 format=3 uid="uid://5kyqpec60060"]
 
 [ext_resource type="Script" uid="uid://d0tlyt7dkp07u" path="res://game/entities/player/player.gd" id="1_gqtae"]
 [ext_resource type="Texture2D" uid="uid://bk3yen8ulgx3n" path="res://assets/self-made/player-sprite-sheet.png" id="2_x4rrl"]
+[ext_resource type="AudioStream" uid="uid://dqcyj4mmuaff4" path="res://assets/sounds/chainsaw-engine-off.mp3" id="3_x4rrl"]
+[ext_resource type="AudioStream" uid="uid://x2pvo5nhufbw" path="res://assets/sounds/chainsaw-engine-start.mp3" id="4_v0nmi"]
+[ext_resource type="AudioStream" uid="uid://yuwklpahc7m2" path="res://assets/sounds/chainsaw-normal.mp3" id="5_dhej3"]
+[ext_resource type="AudioStream" uid="uid://dh2734fp0co0n" path="res://assets/sounds/chainsaw-accelerate.mp3" id="6_kn1iv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
 atlas = ExtResource("2_x4rrl")
@@ -123,3 +127,19 @@ position = Vector2(11, 0)
 rotation = -1.5708
 shape = SubResource("RectangleShape2D_gqtae")
 debug_color = Color(0, 0.644813, 0.273308, 0.42)
+
+[node name="EnigneOffSoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_x4rrl")
+bus = &"SFX"
+
+[node name="EnigneOnSoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_v0nmi")
+bus = &"SFX"
+
+[node name="EnigneNormalSoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_dhej3")
+bus = &"SFX"
+
+[node name="EnigneAccelerateSoundEffect" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_kn1iv")
+bus = &"SFX"
