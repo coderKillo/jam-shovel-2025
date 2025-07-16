@@ -3,7 +3,7 @@ extends Camera2D
 
 const CAMERA_MAX_ZOOM = 1.0
 const CAMERA_MIN_ZOOM = 2.0
-const CAMERA_MAX_OFFSET = -150.0
+const CAMERA_MAX_OFFSET = -100.0
 const CAMERA_MIN_OFFSET = 90.0
 
 const CAMERA_SHAKE_MAX_OFFSET = 40.0
@@ -44,7 +44,7 @@ func _process(_delta):
 		_offset = CAMERA_MAX_OFFSET
 	offset.x = lerp(offset.x, float(_offset), 0.1)
 
-	var _zoom = clamp(player.SPEED / player._speed, CAMERA_MAX_ZOOM, CAMERA_MIN_ZOOM)
+	var _zoom = (speed_factor * (CAMERA_MAX_ZOOM - CAMERA_MIN_ZOOM)) + CAMERA_MIN_ZOOM
 	if player.is_starting():
 		_zoom = CAMERA_MIN_ZOOM
 	zoom = lerp(zoom, Vector2.ONE * _zoom, 0.1)

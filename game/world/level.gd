@@ -4,6 +4,7 @@ extends Node2D
 @onready var player: Player = $Player
 @onready var tacho_bar: ProgressBar = $CanvasLayer/GUI/ProgressBar
 @onready var heat_bar: ProgressBar = $CanvasLayer/GUI/ProgressBar2
+@onready var speed_line: Control = $CanvasLayer/GUI/Effects/SpeedLine
 
 
 func _ready():
@@ -16,3 +17,7 @@ func _process(_delta):
 
 	heat_bar.max_value = player.HEAT_MAX
 	heat_bar.value = player._heat
+
+	speed_line.material.set_shader_parameter(
+		"line_density", (player._speed / player.MAX_SPEED) * 0.5
+	)

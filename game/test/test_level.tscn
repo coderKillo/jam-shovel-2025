@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://dtohfdo7t336y"]
+[gd_scene load_steps=12 format=4 uid="uid://dtohfdo7t336y"]
 
 [ext_resource type="Script" uid="uid://dtdmrs4widckx" path="res://game/world/level.gd" id="1_m34n8"]
 [ext_resource type="PackedScene" uid="uid://5kyqpec60060" path="res://game/entities/player/player.tscn" id="2_le6fd"]
@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://d1hgaet22gba2" path="res://addons/maaacks_game_template/examples/resources/themes/lore.tres" id="4_1eg78"]
 [ext_resource type="TileSet" uid="uid://dmneaxp1vboq3" path="res://game/world/spawner_tileset.tres" id="4_le6fd"]
 [ext_resource type="Script" uid="uid://d4b3ph47r8mb7" path="res://game/gui/score.gd" id="7_6matv"]
+[ext_resource type="PackedScene" uid="uid://dubai005q2xwd" path="res://game/effects/speed/speed_line.tscn" id="9_bkepf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m34n8"]
 texture = ExtResource("3_1eg78")
@@ -269,3 +270,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "299999"
 horizontal_alignment = 2
+
+[node name="Effects" type="Control" parent="CanvasLayer/GUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpeedLine" parent="CanvasLayer/GUI/Effects" instance=ExtResource("9_bkepf")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
