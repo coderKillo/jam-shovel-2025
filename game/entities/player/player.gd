@@ -59,6 +59,7 @@ func _physics_process(delta):
 
 	_update_animation()
 	_update_particles()
+	_update_score()
 
 	match _current_state:
 		PlayerState.IDLE:
@@ -226,6 +227,11 @@ func _update_particles():
 		particales.process_material.initial_velocity_min = _speed * 0.7
 
 
+func _update_score():
+	if hitbox.has_overlapping_bodies():
+		Events.score_points.emit(2)
+
+
 func _on_hitbox_hit(body):
 	var enemy := body as Enemy
 	if not enemy:
@@ -234,9 +240,10 @@ func _on_hitbox_hit(body):
 	_heat += HEAT_BUILD_KILL
 	enemy.kill()
 
+	Events.score_points.emit(_tacho * 100)
 	Events.camera_freez_frame.emit()
 	Events.camera_shake.emit(0.4)
 
 
-func _on_wall_hitbox_hit(body):
+func _on_wall_hitbox_hit(_body):
 	Events.player_hit_wall.emit()
