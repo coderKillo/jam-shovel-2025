@@ -2,10 +2,12 @@ extends Control
 
 const ZOMBIE_KILL_POINTS = 100
 const ZOMBIE_PER_COMBO = 4
+const COMBO_TIME = 5.0
 
 @onready var score_label: Label = %Score
 @onready var combo_label: Label = %Combo
 @onready var points_label: Label = %Points
+@onready var combo_reset_bar: ProgressBar = %ComboResetBar
 
 var _current_score := 0:
 	set = _set_score
@@ -18,13 +20,10 @@ var _current_combo := 0:
 	set = _set_combo
 
 var _combo_tween: Tween
+var _combo_timer: Timer
 
 
 func _ready():
-	_current_score = 0
-	_current_points = 0
-	_current_combo = 0
-
 	Events.enemy_killed.connect(_on_enemy_killed)
 	Events.player_hit_wall.connect(_on_player_hit_wall)
 	Events.engine_start_failed.connect(_on_engine_start_failed)
@@ -34,6 +33,20 @@ func _ready():
 	_combo_tween.set_loops()
 	_combo_tween.tween_property(combo_label, "rotation_degrees", 15.0, 1.0).from(-15.0)
 	_combo_tween.tween_property(combo_label, "rotation_degrees", -15.0, 1.0).from(15.0)
+
+	_combo_timer = Timer.new()
+	_combo_timer.one_shot = true
+	_combo_timer.timeout.connect(_on_combo_timer_timeout)
+	add_child(_combo_timer)
+
+	_current_score = 0
+	_current_points = 0
+	_current_combo = 0
+
+
+func _process(_delta):
+	combo_reset_bar.max_value = COMBO_TIME
+	combo_reset_bar.value = _combo_timer.time_left
 
 
 func _set_score(value: int):
@@ -49,6 +62,8 @@ func _set_points(value: int):
 	points_label.visible = _current_points > 1
 	if diff > 25:
 		_bounce(points_label, 10)
+	if _current_points > 1:
+		_combo_timer.start(COMBO_TIME)
 
 
 func _set_combo(value: int):
@@ -74,6 +89,10 @@ func _combo_break():
 	_current_score += _current_combo * _current_points
 	_current_combo = 0
 	_current_points = 0
+
+
+func _on_combo_timer_timeout():
+	_combo_break()
 
 
 func _on_enemy_killed():
