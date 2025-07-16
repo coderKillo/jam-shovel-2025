@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, ENGINE_STARTED, OVERHEAT }
+enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERHEAT }
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var particales: GPUParticles2D = $Particales
@@ -27,10 +27,13 @@ const HEAT_RELEASE_LOW_TACHO = 30.0
 const HEAT_MAX = 100.0
 const HEAT_RESET_PERCENT = 25.0
 
+const LAUNCH_TIME = 0.3
+
 const SLOWMOTION_FACTOR = 0.3
 
 var _current_state := PlayerState.IDLE
 var _acceleration := false
+var _launch_timer := LAUNCH_TIME
 
 var _heat := 0.0:
 	set = _set_heat
@@ -50,6 +53,7 @@ func _physics_process(delta):
 		velocity += get_gravity() * delta
 
 	_speed = velocity.x
+	_acceleration = false
 
 	_update_animation()
 	_update_particles()
@@ -66,9 +70,15 @@ func _physics_process(delta):
 
 		PlayerState.ENGINE_STARTED:
 			if Input.is_action_just_released("move_right"):
-				_launch(delta)
+				_start_launch(delta)
 			else:
 				_starting(delta)
+
+		PlayerState.LAUNCHING:
+			if _launch_timer < 0:
+				_engine_on(delta)
+			else:
+				_launching(delta)
 
 		PlayerState.ENGINE_ON:
 			if Input.is_action_pressed("move_right") and is_on_floor():
@@ -99,6 +109,10 @@ func is_starting():
 	return _current_state == PlayerState.ENGINE_STARTED
 
 
+func is_launching():
+	return _current_state == PlayerState.LAUNCHING
+
+
 func _init_player():
 	_tacho = 0
 	_heat = 0
@@ -114,9 +128,20 @@ func _break(delta):
 	_tacho -= TACHO_DEACCELERATION * delta
 
 
-func _launch(_delta):
-	_current_state = PlayerState.ENGINE_ON
+func _start_launch(_delta):
 	Engine.time_scale = 1.0
+	_current_state = PlayerState.LAUNCHING
+	_launch_timer = LAUNCH_TIME
+	Events.camera_shake.emit(0.8 * (_tacho / TACHO_MAX))
+
+
+func _launching(delta):
+	velocity.y = 0
+	_launch_timer -= delta
+
+
+func _engine_on(_delta):
+	_current_state = PlayerState.ENGINE_ON
 
 
 func _launch_failed():
@@ -206,3 +231,6 @@ func _on_hitbox_hit(body):
 
 	_heat += HEAT_BUILD_KILL
 	enemy.kill()
+
+	Events.camera_freez_frame.emit()
+	Events.camera_shake.emit(0.4)
