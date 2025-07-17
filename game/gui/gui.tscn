@@ -1,0 +1,242 @@
+[gd_scene load_steps=13 format=3 uid="uid://dabwla87xkitx"]
+
+[ext_resource type="Script" uid="uid://d4b3ph47r8mb7" path="res://game/gui/score.gd" id="1_6a626"]
+[ext_resource type="Shader" uid="uid://cspyestfq25xi" path="res://game/effects/pixel_rotation/pixel_rotation.gdshader" id="2_dxgff"]
+[ext_resource type="PackedScene" uid="uid://dubai005q2xwd" path="res://game/effects/speed/speed_line.tscn" id="3_q68bo"]
+[ext_resource type="Script" uid="uid://sb50unh6wf7f" path="res://game/gui/speedometer.gd" id="4_6f60f"]
+[ext_resource type="Texture2D" uid="uid://cbu4agnp16ypp" path="res://assets/self-made/hud.png" id="5_odbam"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_86erd"]
+shader = ExtResource("2_dxgff")
+shader_parameter/pixel_size = 1.0
+shader_parameter/mix_sampling = 0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctytc"]
+atlas = ExtResource("5_odbam")
+region = Rect2(24, 0, 64, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5imf"]
+atlas = ExtResource("5_odbam")
+region = Rect2(552, 176, 64, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxwbg"]
+atlas = ExtResource("5_odbam")
+region = Rect2(24, 0, 64, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
+atlas = ExtResource("5_odbam")
+region = Rect2(184, 152, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_152kc"]
+atlas = ExtResource("5_odbam")
+region = Rect2(168, 264, 64, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86erd"]
+atlas = ExtResource("5_odbam")
+region = Rect2(240, 272, 24, 24)
+
+[node name="GUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Score" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 52.0
+grow_horizontal = 0
+script = ExtResource("1_6a626")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Score"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -286.0
+offset_bottom = 88.0
+grow_horizontal = 0
+
+[node name="ScoreContainer" type="Control" parent="Score/VBoxContainer"]
+custom_minimum_size = Vector2(0, 27.455)
+layout_mode = 2
+
+[node name="Score" type="Label" parent="Score/VBoxContainer/ScoreContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 286.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 40
+text = "0"
+horizontal_alignment = 2
+
+[node name="ComboResetBar" type="ProgressBar" parent="Score/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+value = 71.09
+fill_mode = 1
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Score/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 9
+
+[node name="ComboContainer" type="Control" parent="Score/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(81.725, 26.29)
+layout_mode = 2
+
+[node name="Combo" type="Label" parent="Score/VBoxContainer/HBoxContainer/ComboContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_86erd")
+custom_minimum_size = Vector2(105, 28)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 28.0
+grow_horizontal = 0
+pivot_offset = Vector2(85, 14)
+theme_override_font_sizes/font_size = 30
+text = "0000x"
+horizontal_alignment = 2
+
+[node name="PointsContainer" type="Control" parent="Score/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+
+[node name="Points" type="Label" parent="Score/VBoxContainer/HBoxContainer/PointsContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 90.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 30
+text = "9999999"
+
+[node name="Effects" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpeedLine" parent="Effects" instance=ExtResource("3_q68bo")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="Speedometer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_6f60f")
+
+[node name="TachoBackground" type="TextureRect" parent="Speedometer"]
+modulate = Color(0.072, 0.2196, 0.4, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_ctytc")
+
+[node name="TachoCoolBackground" type="TextureRect" parent="Speedometer"]
+modulate = Color(0.1376, 0.43, 0.23994, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 182.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_f5imf")
+flip_h = true
+
+[node name="TachoHotBackground" type="TextureRect" parent="Speedometer"]
+modulate = Color(0.89, 0.1602, 0.1602, 1)
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 110.0
+texture = SubResource("AtlasTexture_jxwbg")
+
+[node name="TachoMarkerAxis" type="Control" parent="Speedometer"]
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 330.0
+offset_bottom = 190.0
+rotation = 0.537561
+pivot_offset = Vector2(5, 5)
+
+[node name="TachoMarker" type="TextureRect" parent="Speedometer/TachoMarkerAxis"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -293.425
+offset_top = -20.0
+offset_right = -277.425
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+pivot_offset = Vector2(8, 20)
+texture = SubResource("AtlasTexture_cjd1f")
+
+[node name="ThermoBackground" type="TextureRect" parent="Speedometer"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 273.0
+offset_right = 147.0
+offset_bottom = 313.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_152kc")
+
+[node name="ThermoMarkerAxis" type="Control" parent="Speedometer"]
+anchors_preset = 0
+offset_left = 136.0
+offset_top = 332.0
+offset_right = 146.0
+offset_bottom = 342.0
+rotation = -1.50447
+pivot_offset = Vector2(5, 5)
+
+[node name="ThermoMarker" type="TextureRect" parent="Speedometer/ThermoMarkerAxis"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -34.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_86erd")
+
+[node name="Speed" type="Label" parent="Speedometer"]
+modulate = Color(1, 0.874333, 0.42, 1)
+layout_mode = 0
+offset_left = 115.0
+offset_top = 270.0
+offset_right = 168.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 40
+text = "100"
+horizontal_alignment = 1

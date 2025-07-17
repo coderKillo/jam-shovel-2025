@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dtohfdo7t336y"]
+[gd_scene load_steps=22 format=4 uid="uid://dtohfdo7t336y"]
 
 [ext_resource type="Script" uid="uid://dtdmrs4widckx" path="res://game/world/level.gd" id="1_m34n8"]
 [ext_resource type="PackedScene" uid="uid://dxqp0qk3fyvo6" path="res://game/world/background.tscn" id="2_01x5g"]
@@ -6,11 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://bssa31wpfutpx" path="res://assets/TileSet Apocalypse Base/TileSet Apocalypse Base.png" id="3_1eg78"]
 [ext_resource type="Script" uid="uid://ct6k2iewirdv7" path="res://game/world/zombie_spawner.gd" id="3_m34n8"]
 [ext_resource type="Script" uid="uid://fd8akrsigg1y" path="res://game/entities/player/player_camera.gd" id="3_thxgm"]
-[ext_resource type="Theme" uid="uid://d1hgaet22gba2" path="res://addons/maaacks_game_template/examples/resources/themes/lore.tres" id="4_1eg78"]
 [ext_resource type="TileSet" uid="uid://dmneaxp1vboq3" path="res://game/world/spawner_tileset.tres" id="4_le6fd"]
 [ext_resource type="Script" uid="uid://d4b3ph47r8mb7" path="res://game/gui/score.gd" id="7_6matv"]
 [ext_resource type="PackedScene" uid="uid://dubai005q2xwd" path="res://game/effects/speed/speed_line.tscn" id="9_bkepf"]
 [ext_resource type="Shader" uid="uid://cspyestfq25xi" path="res://game/effects/pixel_rotation/pixel_rotation.gdshader" id="10_4x4ld"]
+[ext_resource type="Script" uid="uid://sb50unh6wf7f" path="res://game/gui/speedometer.gd" id="11_86erd"]
+[ext_resource type="Texture2D" uid="uid://cbu4agnp16ypp" path="res://assets/self-made/hud.png" id="12_86erd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m34n8"]
 texture = ExtResource("3_1eg78")
@@ -168,6 +169,30 @@ shader = ExtResource("10_4x4ld")
 shader_parameter/pixel_size = 1.0
 shader_parameter/mix_sampling = 0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctytc"]
+atlas = ExtResource("12_86erd")
+region = Rect2(24, 0, 64, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5imf"]
+atlas = ExtResource("12_86erd")
+region = Rect2(552, 176, 64, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxwbg"]
+atlas = ExtResource("12_86erd")
+region = Rect2(24, 0, 64, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
+atlas = ExtResource("12_86erd")
+region = Rect2(184, 152, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_152kc"]
+atlas = ExtResource("12_86erd")
+region = Rect2(168, 264, 64, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86erd"]
+atlas = ExtResource("12_86erd")
+region = Rect2(240, 272, 24, 24)
+
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_m34n8")
 
@@ -200,38 +225,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/GUI"]
-custom_minimum_size = Vector2(8, 250)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 22.0
-offset_top = -13.0
-offset_right = 26.0
-offset_bottom = 14.0
-grow_vertical = 2
-theme = ExtResource("4_1eg78")
-value = 31.67
-fill_mode = 3
-show_percentage = false
-
-[node name="ProgressBar2" type="ProgressBar" parent="CanvasLayer/GUI"]
-modulate = Color(1, 0.31, 0.31, 1)
-custom_minimum_size = Vector2(8, 250)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 32.23
-offset_top = -124.0
-offset_right = 40.23
-offset_bottom = 126.0
-grow_vertical = 2
-theme = ExtResource("4_1eg78")
-fill_mode = 3
-show_percentage = false
 
 [node name="Score" type="Control" parent="CanvasLayer/GUI"]
 layout_mode = 1
@@ -326,3 +319,107 @@ offset_right = 640.0
 offset_bottom = 360.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="Speedometer" type="Control" parent="CanvasLayer/GUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_86erd")
+
+[node name="TachoBackground" type="TextureRect" parent="CanvasLayer/GUI/Speedometer"]
+modulate = Color(0.072, 0.2196, 0.4, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_ctytc")
+
+[node name="TachoCoolBackground" type="TextureRect" parent="CanvasLayer/GUI/Speedometer"]
+modulate = Color(0.1376, 0.43, 0.23994, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 182.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_f5imf")
+flip_h = true
+
+[node name="TachoHotBackground" type="TextureRect" parent="CanvasLayer/GUI/Speedometer"]
+modulate = Color(0.89, 0.1602, 0.1602, 1)
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 110.0
+texture = SubResource("AtlasTexture_jxwbg")
+
+[node name="TachoMarkerAxis" type="Control" parent="CanvasLayer/GUI/Speedometer"]
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 330.0
+offset_bottom = 190.0
+rotation = 0.537561
+pivot_offset = Vector2(5, 5)
+
+[node name="TachoMarker" type="TextureRect" parent="CanvasLayer/GUI/Speedometer/TachoMarkerAxis"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -293.425
+offset_top = -20.0
+offset_right = -277.425
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+pivot_offset = Vector2(8, 20)
+texture = SubResource("AtlasTexture_cjd1f")
+
+[node name="ThermoBackground" type="TextureRect" parent="CanvasLayer/GUI/Speedometer"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 273.0
+offset_right = 147.0
+offset_bottom = 313.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_152kc")
+
+[node name="ThermoMarkerAxis" type="Control" parent="CanvasLayer/GUI/Speedometer"]
+anchors_preset = 0
+offset_left = 136.0
+offset_top = 332.0
+offset_right = 146.0
+offset_bottom = 342.0
+rotation = -1.50447
+pivot_offset = Vector2(5, 5)
+
+[node name="ThermoMarker" type="TextureRect" parent="CanvasLayer/GUI/Speedometer/ThermoMarkerAxis"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -34.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_86erd")
+
+[node name="Speed" type="Label" parent="CanvasLayer/GUI/Speedometer"]
+modulate = Color(1, 0.874333, 0.42, 1)
+layout_mode = 0
+offset_left = 115.0
+offset_top = 270.0
+offset_right = 168.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 40
+text = "100"
+horizontal_alignment = 1

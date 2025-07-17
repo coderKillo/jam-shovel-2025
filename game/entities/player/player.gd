@@ -7,13 +7,8 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERH
 @onready var particales: GPUParticles2D = $Particales
 @onready var hitbox: Area2D = $Hitbox
 @onready var wall_hitbox: Area2D = $WallHitbox
-
-@onready var sound_effects = {
-	engine_on = $EnigneOnSoundEffect,
-	engine_off = $EnigneOffSoundEffect,
-	normal = $EnigneNormalSoundEffect,
-	accelerate = $EnigneAccelerateSoundEffect,
-}
+@onready var sound: PlayerSounds = $PlayerSounds
+@onready var effects: PlayerEffects = $PlayerEffects
 
 const JUMP_VELOCITY = -500.0
 
@@ -22,7 +17,7 @@ const MAX_SPEED = 800.0
 
 const TACHO_MAX = 1.0
 const TACHO_MIN = 0.0
-const TACHO_THRESHOLD_HEAT = 0.7
+const TACHO_THRESHOLD_HEAT = 0.75
 const TACHO_THRESHOLD_COOL = 0.5
 const TACHO_ACCELERATION = 1.5
 const TACHO_DEACCELERATION = 1.0
@@ -34,6 +29,7 @@ const HEAT_RELEASE_IN_AIR = 80.0
 const HEAT_RELEASE_LOW_TACHO = 30.0
 const HEAT_MAX = 100.0
 const HEAT_RESET_PERCENT = 25.0
+const HEAT_HOT_TRESHHOLD = HEAT_MAX * 0.75
 
 const LAUNCH_TIME = 0.3
 
@@ -42,7 +38,6 @@ const SLOWMOTION_FACTOR = 0.3
 var _current_state := PlayerState.IDLE
 var _acceleration := false
 var _launch_timer := LAUNCH_TIME
-var _last_sound_effect := ""
 
 var _heat := 0.0:
 	set = _set_heat
@@ -66,7 +61,7 @@ func _physics_process(delta):
 	_acceleration = false
 
 	_update_animation()
-	_update_sound()
+	sound.update_sound(_tacho, TACHO_MIN, TACHO_MAX)
 	_update_particles()
 	_update_score()
 
@@ -134,12 +129,12 @@ func _init_player():
 func _start_engine(_delta):
 	_current_state = PlayerState.ENGINE_STARTED
 	Engine.time_scale = SLOWMOTION_FACTOR
-	_play_sound_effect("engine_on")
+	sound.play_sound_effect("engine_on")
 
 
 func _break(delta):
 	_tacho -= TACHO_DEACCELERATION * delta
-	_play_sound_effect("")
+	sound.stop_all()
 
 
 func _start_launch(_delta):
@@ -147,12 +142,13 @@ func _start_launch(_delta):
 	_current_state = PlayerState.LAUNCHING
 	_launch_timer = LAUNCH_TIME
 	Events.camera_shake.emit(0.8 * (_tacho / TACHO_MAX))
-	_play_sound_effect("accelerate")
+	sound.play_sound_effect("accelerate")
 
 
 func _launching(delta):
 	velocity.y = 0
 	_launch_timer -= delta
+	effects.play_effect("boost")
 
 
 func _engine_on(_delta):
@@ -165,23 +161,32 @@ func _launch_failed():
 
 func _starting(delta):
 	_tacho += (TACHO_ACCELERATION / SLOWMOTION_FACTOR) * delta
+	effects.play_effect("charge")
 
 
 func _move_normal(delta):
 	var new_speed = lerp(_speed, SPEED, delta)
 	_tacho = (new_speed / MAX_SPEED) * TACHO_MAX
-	_play_sound_effect("normal")
+	sound.play_sound_effect("normal")
+	if _heat > HEAT_HOT_TRESHHOLD:
+		effects.play_effect("fire_small")
+	else:
+		effects.stop_effects()
 
 
 func _move_boost(delta):
 	_tacho += TACHO_ACCELERATION * delta
-	_play_sound_effect("accelerate")
+	sound.play_sound_effect("accelerate")
+	if _heat > HEAT_HOT_TRESHHOLD:
+		effects.play_effect("fire_big")
+	else:
+		effects.stop_effects()
 
 
 func _jump(_delta):
 	velocity.y = JUMP_VELOCITY
 	_current_state = PlayerState.ENGINE_OFF
-	_play_sound_effect("engine_off")
+	sound.play_sound_effect("engine_off")
 
 
 func _overheat(_delta):
@@ -242,27 +247,9 @@ func _update_particles():
 		particales.process_material.initial_velocity_min = _speed * 0.7
 
 
-func _update_sound():
-	var audio_player := sound_effects.accelerate as AudioStreamPlayer2D
-	var tacho_normalized = (_tacho - TACHO_MIN) / (TACHO_MAX - TACHO_MIN)
-	audio_player.pitch_scale = (tacho_normalized * (1.1 - 0.95)) + 0.95
-	audio_player.volume_db = (tacho_normalized * (0 + 10)) + 0
-
-
 func _update_score():
 	if hitbox.has_overlapping_bodies():
 		Events.score_points.emit(2)
-
-
-func _play_sound_effect(sound_name: String):
-	for id in sound_effects.keys():
-		var audio_player := sound_effects[id] as AudioStreamPlayer2D
-		if id == sound_name:
-			if not audio_player.playing:
-				audio_player.play()
-				_last_sound_effect = sound_name
-		else:
-			audio_player.stop()
 
 
 func _on_hitbox_hit(body):
