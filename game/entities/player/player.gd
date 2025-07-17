@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal overheat
+
 enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERHEAT }
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
@@ -190,7 +192,10 @@ func _jump(_delta):
 
 
 func _overheat(_delta):
-	print("LOSE!!!")
+	Engine.time_scale = 1.0
+	overheat.emit()
+	set_process(false)
+	set_physics_process(false)
 
 	## end Handle Player State
 

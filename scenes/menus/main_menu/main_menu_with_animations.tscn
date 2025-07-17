@@ -1,11 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://c78vtc8cg3qo8"]
+[gd_scene load_steps=23 format=3 uid="uid://c78vtc8cg3qo8"]
 
 [ext_resource type="PackedScene" uid="uid://c6k5nnpbypshi" path="res://addons/maaacks_game_template/base/scenes/menus/main_menu/main_menu.tscn" id="1_rr1rn"]
 [ext_resource type="Theme" uid="uid://dvw2fe07fhjwu" path="res://resources/themes/lore.tres" id="2_ixa71"]
 [ext_resource type="Script" uid="uid://dqwkxqvo2k8yo" path="res://scenes/menus/main_menu/main_menu_with_animations.gd" id="2_sr523"]
 [ext_resource type="PackedScene" uid="uid://cifpvma40k3d1" path="res://scenes/menus/options_menu/mini_options_menu.tscn" id="3_rr1rn"]
 [ext_resource type="PackedScene" uid="uid://bg8qlntq37pp" path="res://scenes/credits/scrollable_credits.tscn" id="4_rr1rn"]
+[ext_resource type="PackedScene" uid="uid://ccppwwuglvave" path="res://scenes/menus/level_select_menu/level_select_menu.tscn" id="4_vsp5b"]
 [ext_resource type="Texture2D" uid="uid://dpu0ln7p1pgn6" path="res://assets/Title/Title.png" id="5_sr523"]
+[ext_resource type="PackedScene" uid="uid://dxqp0qk3fyvo6" path="res://game/world/background.tscn" id="7_2k5l7"]
 
 [sub_resource type="Animation" id="1"]
 resource_name = "Intro"
@@ -358,7 +360,7 @@ region = Rect2(100, 105, 451, 177)
 [node name="MainMenu" instance=ExtResource("1_rr1rn")]
 theme = ExtResource("2_ixa71")
 script = ExtResource("2_sr523")
-level_select_packed_scene = null
+level_select_packed_scene = ExtResource("4_vsp5b")
 confirm_new_game = true
 game_scene_path = "res://scenes/game_scene/game_ui.tscn"
 options_packed_scene = ExtResource("3_rr1rn")
@@ -373,6 +375,24 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_vikuh")
 anim_player = NodePath("../MenuAnimationPlayer")
 parameters/conditions/intro_done = false
+
+[node name="Background" parent="." index="5" instance=ExtResource("7_2k5l7")]
+position = Vector2(11, 299)
+
+[node name="Parallax2D1" parent="Background" index="0"]
+autoscroll = Vector2(-5, 0)
+
+[node name="Parallax2D2" parent="Background" index="1"]
+autoscroll = Vector2(-10, 0)
+
+[node name="Parallax2D3" parent="Background" index="2"]
+autoscroll = Vector2(-20, 0)
+
+[node name="Parallax2D4" parent="Background" index="3"]
+autoscroll = Vector2(-40, 0)
+
+[node name="Parallax2D5" parent="Background" index="4"]
+autoscroll = Vector2(-100, 0)
 
 [node name="VersionContainer" parent="VersionMargin" index="0"]
 modulate = Color(1, 1, 1, 0)
@@ -421,7 +441,7 @@ visible = false
 layout_mode = 2
 text = "Level Select"
 
-[node name="LevelSelectContainer" type="MarginContainer" parent="." index="9"]
+[node name="LevelSelectContainer" type="MarginContainer" parent="." index="10"]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_right = 1.0
@@ -432,7 +452,7 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 32
 
-[node name="NewGameConfirmationDialog" type="ConfirmationDialog" parent="." index="11"]
+[node name="NewGameConfirmationDialog" type="ConfirmationDialog" parent="." index="12"]
 unique_name_in_owner = true
 auto_translate_mode = 1
 title = "Start a New Game?"
@@ -444,3 +464,5 @@ All progress in the current game will be lost."
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]
 [connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/LevelSelectButton" to="." method="_on_level_select_button_pressed"]
 [connection signal="confirmed" from="NewGameConfirmationDialog" to="." method="_on_new_game_confirmation_dialog_confirmed"]
+
+[editable path="Background"]

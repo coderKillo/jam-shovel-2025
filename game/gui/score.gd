@@ -1,3 +1,4 @@
+class_name Score
 extends Control
 
 const ZOMBIE_KILL_POINTS = 100
@@ -47,6 +48,12 @@ func _ready():
 func _process(_delta):
 	combo_reset_bar.max_value = COMBO_TIME
 	combo_reset_bar.value = _combo_timer.time_left
+
+
+func reset():
+	_current_score = 0
+	_current_points = 0
+	_current_combo = 0
 
 
 func _set_score(value: int):

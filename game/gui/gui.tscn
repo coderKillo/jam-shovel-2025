@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dabwla87xkitx"]
+[gd_scene load_steps=14 format=3 uid="uid://dabwla87xkitx"]
 
 [ext_resource type="Script" uid="uid://d4b3ph47r8mb7" path="res://game/gui/score.gd" id="1_6a626"]
+[ext_resource type="Script" uid="uid://ddjjcmrv5vdlf" path="res://game/gui/gui.gd" id="1_dxgff"]
 [ext_resource type="Shader" uid="uid://cspyestfq25xi" path="res://game/effects/pixel_rotation/pixel_rotation.gdshader" id="2_dxgff"]
 [ext_resource type="PackedScene" uid="uid://dubai005q2xwd" path="res://game/effects/speed/speed_line.tscn" id="3_q68bo"]
 [ext_resource type="Script" uid="uid://sb50unh6wf7f" path="res://game/gui/speedometer.gd" id="4_6f60f"]
@@ -42,6 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dxgff")
 
 [node name="Score" type="Control" parent="."]
 layout_mode = 1
@@ -164,6 +166,7 @@ flip_h = true
 
 [node name="TachoHotBackground" type="TextureRect" parent="Speedometer"]
 modulate = Color(0.89, 0.1602, 0.1602, 1)
+layout_mode = 0
 offset_left = 11.0
 offset_top = 6.0
 offset_right = 75.0
