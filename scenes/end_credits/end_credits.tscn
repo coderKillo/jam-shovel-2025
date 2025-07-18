@@ -34,6 +34,88 @@ stretch_mode = 5
 [node name="ScrollContainer" parent="." index="3"]
 scroll_vertical = 0
 
+[node name="CreditsLabel" parent="ScrollContainer/VBoxContainer" index="1"]
+text = "[center][font_size=48]Collaborators[/font_size]
+
+[font_size=32]Godot Game Template[/font_size]
+[img=80]res:///assets/plugin_logo/logo.png[/img]  
+Author: [url=https://github.com/Maaack/Godot-Game-Template/graphs/contributors]Marek Belski and contributors[/url]  
+Source: [url=https://github.com/Maaack/Godot-Game-Template]github: Godot-Game-Template[/url]  
+License: [url=LICENSE.txt]MIT License[/url]  
+
+[font_size=48]Assets[/font_size]
+[font_size=24]Apocalypse Tileset[/font_size]
+Author: MatheusGG28
+Source: https://matheusgg99.itch.io/tileset-apocalypse
+
+[font_size=24]Wasteland City Parallax[/font_size]
+Author: owmyknees
+Source: https://owmyknees.itch.io/wasteland-city-parallax-background
+
+[font_size=24]Free Pixel Melee Pack[/font_size]
+Author: Domin Dev
+Source: https://domin-dev.itch.io/free-pixel-melee-pack-asset-pack
+
+[font_size=24]Animated pixel Zombie Characters[/font_size]
+Author: knik1985
+Source: https://opengameart.org/content/animated-pixel-zombie-characters
+License: CC-BY 3.0
+
+[font_size=48]Fonts[/font_size]
+[font_size=24]Chainsaw Carnage[/font_size]
+Author: Designed by GGBotNet
+Source: https://ggbot.itch.io/chainsaw-carnage-font
+License: [url=https://openfontlicense.org/]OFL License[/url]
+
+[font_size=24]Thaleah Fat[/font_size]
+Author: Tiny Worlds
+Source: https://tinyworlds.itch.io/free-pixel-font-thaleah
+License: [url=https://creativecommons.org/licenses/by/4.0/]CC-BY 4.0[/url]
+
+
+[font_size=48]VFX[/font_size]
+[font_size=24]Blood FX[/font_size]
+Author: jasontomlee
+Source: https://jasontomlee.itch.io/blood-fx
+
+[font_size=24]Free Effect Bullet Impact[/font_size]
+Author: BDragon1727
+Source: https://bdragon1727.itch.io/free-effect-bullet-impact-explosion-32x32
+
+[font_size=48]UI[/font_size]
+[font_size=24]Bluestone UI[/font_size]
+Author: Canvas Coven
+Source: https://canvas-coven.itch.io/blue-stone-ui-free-asset
+License: Creative Commons Attribution v4.0 International
+
+[font_size=48]SFX[/font_size]
+[font_size=24]2 wooden squish splatter sequences[/font_size]
+Author: Independent.nu
+Source: https://opengameart.org/content/2-wooden-squish-splatter-sequences
+License: CC0
+
+[font_size=24]10 Impact/Shield Blocks[/font_size]
+Author: StarNinjas
+Source: https://opengameart.org/content/10-impactshield-blocks
+License: CC0
+
+[font_size=48]Music[/font_size]
+[font_size=24]Punk Sound[/font_size]
+Author: bariq18
+Source: https://opengameart.org/content/punk-sound
+Source: https://opengameart.org/content/punk-sound-2
+License: [url=https://creativecommons.org/licenses/by/4.0/]CC-BY 4.0[/url]
+
+
+[font_size=48]Tools[/font_size]
+[font_size=24]Godot[/font_size]
+[img=80]res:///assets/godot_engine_logo/logo_vertical_color_dark.png[/img]  
+Author: [url=https://godotengine.org/contact]Juan Linietsky, Ariel Manzur, and contributors[/url]  
+Source: [url=https://godotengine.org/]godotengine.org[/url]  
+License: [url=https://github.com/godotengine/godot/blob/master/LICENSE.txt]MIT License[/url]  
+
+[/center]"
+
 [node name="CenterContainer" type="CenterContainer" parent="." index="4"]
 layout_mode = 0
 anchor_right = 1.0
