@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckdfxdu4eqob8"]
+[gd_scene load_steps=14 format=3 uid="uid://ckdfxdu4eqob8"]
 
 [ext_resource type="Script" uid="uid://dtdmrs4widckx" path="res://game/world/level.gd" id="1_y8ffr"]
 [ext_resource type="PackedScene" uid="uid://dxqp0qk3fyvo6" path="res://game/world/background.tscn" id="2_q11k7"]
@@ -8,6 +8,13 @@
 [ext_resource type="Script" uid="uid://ct6k2iewirdv7" path="res://game/world/zombie_spawner.gd" id="6_a8q0g"]
 [ext_resource type="Texture2D" uid="uid://bssa31wpfutpx" path="res://assets/TileSet Apocalypse Base/TileSet Apocalypse Base.png" id="7_ckjko"]
 [ext_resource type="Script" uid="uid://ck7cdjnnkm4aq" path="res://scenes/game_scene/tutorial_manager.gd" id="8_ga387"]
+[ext_resource type="Texture2D" uid="uid://5kqs6qo1ikh0" path="res://assets/self-made/barn.png" id="9_y8ffr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdvxg"]
+size = Vector2(181, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q11k7"]
+size = Vector2(338, 350.5)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m34n8"]
 texture = ExtResource("7_ckjko")
@@ -160,13 +167,38 @@ terrain_set_0/terrain_0/name = "City Ground"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_m34n8")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdvxg"]
-size = Vector2(50, 200)
-
 [node name="TestLevel" type="Node2D"]
 script = ExtResource("1_y8ffr")
 
 [node name="Background" parent="." instance=ExtResource("2_q11k7")]
+
+[node name="LevelCompleteArea" type="Area2D" parent="."]
+position = Vector2(2367, -19)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelCompleteArea"]
+position = Vector2(97.5, 41)
+shape = SubResource("RectangleShape2D_rdvxg")
+
+[node name="Barn" type="StaticBody2D" parent="LevelCompleteArea"]
+collision_layer = 4
+collision_mask = 5
+
+[node name="Barn" type="Sprite2D" parent="LevelCompleteArea/Barn"]
+scale = Vector2(2, 2)
+texture = ExtResource("9_y8ffr")
+
+[node name="Barnfront" type="Sprite2D" parent="LevelCompleteArea/Barn"]
+z_index = 1
+position = Vector2(48, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("9_y8ffr")
+region_enabled = true
+region_rect = Rect2(48, 0, 152, 93)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelCompleteArea/Barn"]
+position = Vector2(21, -156)
+shape = SubResource("RectangleShape2D_q11k7")
 
 [node name="Player" parent="." instance=ExtResource("3_hg3e2")]
 position = Vector2(1, 39)
@@ -188,10 +220,3 @@ tile_set = SubResource("TileSet_le6fd")
 [node name="TutorialManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("8_ga387")
-
-[node name="LevelCompleteArea" type="Area2D" parent="."]
-position = Vector2(2378, -25)
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelCompleteArea"]
-shape = SubResource("RectangleShape2D_rdvxg")
