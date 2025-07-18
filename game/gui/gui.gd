@@ -2,6 +2,7 @@ class_name Gui
 extends Control
 
 @export var level_loader: LevelListLoader
+@export var background_music: AudioStreamPlayer
 
 @onready var speedometer: Speedometer = $Speedometer
 @onready var speed_line: Control = $Effects/SpeedLine
@@ -13,6 +14,8 @@ var player: Player
 func _ready():
 	level_loader.level_ready.connect(_on_level_ready)
 	level_loader.level_loaded.connect(_on_level_loaded)
+
+	Events.tutorial_active.connect(_on_tutorial_active)
 
 
 func _process(_delta):
@@ -36,7 +39,16 @@ func _process(_delta):
 
 func _on_level_loaded():
 	score.reset()
+	background_music.play()
 
 
 func _on_level_ready():
 	player = level_loader.current_level.player
+	level_loader.current_level.score = score
+
+
+func _on_tutorial_active(active: bool):
+	if active:
+		hide()
+	else:
+		show()

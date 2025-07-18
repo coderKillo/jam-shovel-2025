@@ -268,7 +268,7 @@ func _on_hitbox_hit(body):
 
 	sound_splatter.play_random()
 
-	Events.score_points.emit(_tacho * 100)
+	Events.score_points.emit(_speed)
 	Events.camera_freez_frame.emit()
 	Events.camera_shake.emit(0.4)
 

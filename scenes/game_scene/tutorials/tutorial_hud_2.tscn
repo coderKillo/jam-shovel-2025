@@ -1,0 +1,165 @@
+[gd_scene load_steps=9 format=3 uid="uid://dn4ihydsxnl0v"]
+
+[ext_resource type="PackedScene" uid="uid://wny2d8dvp3ok" path="res://addons/maaacks_game_template/base/scenes/overlaid_menu/overlaid_menu.tscn" id="1_i4nyd"]
+[ext_resource type="Texture2D" uid="uid://cbu4agnp16ypp" path="res://assets/self-made/hud.png" id="2_rv602"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctytc"]
+atlas = ExtResource("2_rv602")
+region = Rect2(24, 0, 64, 360)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5imf"]
+atlas = ExtResource("2_rv602")
+region = Rect2(552, 176, 64, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxwbg"]
+atlas = ExtResource("2_rv602")
+region = Rect2(24, 0, 64, 104)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
+atlas = ExtResource("2_rv602")
+region = Rect2(184, 152, 16, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_152kc"]
+atlas = ExtResource("2_rv602")
+region = Rect2(168, 264, 64, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86erd"]
+atlas = ExtResource("2_rv602")
+region = Rect2(240, 272, 24, 24)
+
+[node name="Tutorial1" instance=ExtResource("1_i4nyd")]
+
+[node name="MenuPanelContainer" parent="." index="1"]
+offset_left = -206.0
+offset_top = -75.0
+offset_right = 215.0
+offset_bottom = 76.0
+
+[node name="BoxContainer" parent="MenuPanelContainer/MarginContainer" index="0"]
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/TitleMargin" index="0"]
+text = "Tutorial"
+
+[node name="DescriptionMargin" parent="MenuPanelContainer/MarginContainer/BoxContainer" index="1"]
+visible = true
+
+[node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
+text = "If the needle is entering the red zone the engine temperature in the bottum left is rising
+"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="GUI" type="Control" parent="." index="2"]
+process_mode = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Speedometer" type="Control" parent="GUI" index="0"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TachoBackground" type="TextureRect" parent="GUI/Speedometer" index="0"]
+modulate = Color(0.072, 0.2196, 0.4, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_ctytc")
+
+[node name="TachoCoolBackground" type="TextureRect" parent="GUI/Speedometer" index="1"]
+modulate = Color(0.1376, 0.43, 0.23994, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 182.0
+offset_right = 75.0
+offset_bottom = 366.0
+texture = SubResource("AtlasTexture_f5imf")
+flip_h = true
+
+[node name="TachoHotBackground" type="TextureRect" parent="GUI/Speedometer" index="2"]
+modulate = Color(0.89, 0.1602, 0.1602, 1)
+layout_mode = 0
+offset_left = 11.0
+offset_top = 6.0
+offset_right = 75.0
+offset_bottom = 110.0
+texture = SubResource("AtlasTexture_jxwbg")
+
+[node name="TachoMarkerAxis" type="Control" parent="GUI/Speedometer" index="3"]
+anchors_preset = 0
+offset_left = 320.0
+offset_top = 180.0
+offset_right = 330.0
+offset_bottom = 190.0
+rotation = 0.537561
+pivot_offset = Vector2(5, 5)
+
+[node name="TachoMarker" type="TextureRect" parent="GUI/Speedometer/TachoMarkerAxis" index="0"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -293.425
+offset_top = -20.0
+offset_right = -277.425
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -1.5708
+pivot_offset = Vector2(8, 20)
+texture = SubResource("AtlasTexture_cjd1f")
+
+[node name="ThermoBackground" type="TextureRect" parent="GUI/Speedometer" index="4"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 273.0
+offset_right = 147.0
+offset_bottom = 313.0
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_152kc")
+
+[node name="ThermoMarkerAxis" type="Control" parent="GUI/Speedometer" index="5"]
+anchors_preset = 0
+offset_left = 136.0
+offset_top = 332.0
+offset_right = 146.0
+offset_bottom = 342.0
+rotation = -1.50447
+pivot_offset = Vector2(5, 5)
+
+[node name="ThermoMarker" type="TextureRect" parent="GUI/Speedometer/ThermoMarkerAxis" index="0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -34.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_86erd")
+
+[node name="Speed" type="Label" parent="GUI/Speedometer" index="6"]
+modulate = Color(1, 0.874333, 0.42, 1)
+layout_mode = 0
+offset_left = 115.0
+offset_top = 270.0
+offset_right = 168.0
+offset_bottom = 307.0
+theme_override_font_sizes/font_size = 40
+text = "100"
+horizontal_alignment = 1

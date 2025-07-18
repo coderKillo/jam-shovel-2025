@@ -10,6 +10,7 @@ signal levels_finished
 
 ## Container where the level instance will be added.
 @export var level_container: Node
+@export_tool_button("Refresh Files", "Callable") var refresh_files = _refresh_files
 
 var current_level: Node
 

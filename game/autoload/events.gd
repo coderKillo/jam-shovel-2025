@@ -11,3 +11,7 @@ signal score_points(value: int)
 signal camera_shake(intensity: float)
 
 signal camera_freez_frame
+
+signal score_changed
+
+signal tutorial_active(active: bool)

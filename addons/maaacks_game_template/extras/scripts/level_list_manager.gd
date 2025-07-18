@@ -106,6 +106,7 @@ func _load_win_screen_or_ending() -> void:
 	if game_won_scene:
 		var instance = game_won_scene.instantiate()
 		get_tree().current_scene.add_child(instance)
+		_setup_screen(instance)
 		_try_connecting_signal_to_node(instance, &"continue_pressed", _load_ending)
 		_try_connecting_signal_to_node(instance, &"restart_pressed", _reload_level)
 		_try_connecting_signal_to_node(instance, &"main_menu_pressed", _load_main_menu)
@@ -117,11 +118,16 @@ func _load_level_complete_screen_or_next_level() -> void:
 	if level_won_scene:
 		var instance = level_won_scene.instantiate()
 		get_tree().current_scene.add_child(instance)
+		_setup_screen(instance)
 		_try_connecting_signal_to_node(instance, &"continue_pressed", _load_next_level)
 		_try_connecting_signal_to_node(instance, &"restart_pressed", _advance_and_reload)
 		_try_connecting_signal_to_node(instance, &"main_menu_pressed", _advance_and_load_main_menu)
 	else:
 		_load_next_level()
+
+
+func _setup_screen(instance: Node):
+	pass
 
 
 func is_on_last_level() -> bool:

@@ -17,6 +17,8 @@ func _ready():
 	_spawn_positions.sort()
 	_spawn_index = 0
 
+	hide()
+
 
 func _process(_delta):
 	if _spawn_index >= _spawn_positions.size():
@@ -29,5 +31,5 @@ func _process(_delta):
 
 func _spawn(spawn_position: Vector2):
 	var zombie = zombie_scene.instantiate()
-	add_child(zombie)
+	get_parent().add_child(zombie)
 	zombie.global_position = spawn_position

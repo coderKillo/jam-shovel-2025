@@ -354,7 +354,7 @@ visible = false
 position = Vector2(-1, -1)
 sprite_frames = SubResource("SpriteFrames_xt77v")
 animation = &"charge"
-frame_progress = 0.469553
+frame_progress = 0.603709
 offset = Vector2(10.835, 0.915)
 script = ExtResource("5_igs2l")
 

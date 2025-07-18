@@ -42,7 +42,8 @@ func _ready():
 
 	_current_score = 0
 	_current_points = 0
-	_current_combo = 0
+	_current_sub_combo = 0
+	_current_combo = 1
 
 
 func _process(_delta):
@@ -53,7 +54,12 @@ func _process(_delta):
 func reset():
 	_current_score = 0
 	_current_points = 0
-	_current_combo = 0
+	_current_sub_combo = 0
+	_current_combo = 1
+
+
+func get_score() -> int:
+	return _current_score + (_current_combo * _current_points)
 
 
 func _set_score(value: int):
@@ -94,8 +100,9 @@ func _bounce(node, value):
 
 func _combo_break():
 	_current_score += _current_combo * _current_points
-	_current_combo = 0
+	_current_combo = 1
 	_current_points = 0
+	_current_sub_combo = 0
 
 
 func _on_combo_timer_timeout():

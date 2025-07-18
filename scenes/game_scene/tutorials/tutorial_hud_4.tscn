@@ -1,0 +1,120 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmj42rofc2s35"]
+
+[ext_resource type="PackedScene" uid="uid://wny2d8dvp3ok" path="res://addons/maaacks_game_template/base/scenes/overlaid_menu/overlaid_menu.tscn" id="1_ivfnt"]
+[ext_resource type="Shader" uid="uid://cspyestfq25xi" path="res://game/effects/pixel_rotation/pixel_rotation.gdshader" id="2_ivfnt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_86erd"]
+shader = ExtResource("2_ivfnt")
+shader_parameter/pixel_size = 1.0
+shader_parameter/mix_sampling = 0
+
+[node name="Tutorial1" instance=ExtResource("1_ivfnt")]
+
+[node name="MenuPanelContainer" parent="." index="1"]
+offset_left = -206.0
+offset_top = -75.0
+offset_right = 215.0
+offset_bottom = 76.0
+
+[node name="BoxContainer" parent="MenuPanelContainer/MarginContainer" index="0"]
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/TitleMargin" index="0"]
+text = "Tutorial"
+
+[node name="DescriptionMargin" parent="MenuPanelContainer/MarginContainer/BoxContainer" index="1"]
+visible = true
+
+[node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
+text = "On the top right is the score
+points for each kill depend on your speed
+So be Fast!"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="GUI2" type="Control" parent="." index="2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Score" type="Control" parent="GUI2" index="0"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -52.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = 52.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI2/Score" index="0"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -286.0
+offset_bottom = 88.0
+grow_horizontal = 0
+
+[node name="ScoreContainer" type="Control" parent="GUI2/Score/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(0, 27.455)
+layout_mode = 2
+
+[node name="Score" type="Label" parent="GUI2/Score/VBoxContainer/ScoreContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 286.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 40
+text = "10000000"
+horizontal_alignment = 2
+
+[node name="ComboResetBar" type="ProgressBar" parent="GUI2/Score/VBoxContainer" index="1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+value = 71.09
+fill_mode = 1
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI2/Score/VBoxContainer" index="2"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 9
+
+[node name="ComboContainer" type="Control" parent="GUI2/Score/VBoxContainer/HBoxContainer" index="0"]
+custom_minimum_size = Vector2(81.725, 26.29)
+layout_mode = 2
+
+[node name="Combo" type="Label" parent="GUI2/Score/VBoxContainer/HBoxContainer/ComboContainer" index="0"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_86erd")
+custom_minimum_size = Vector2(105, 28)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_bottom = 28.0
+grow_horizontal = 0
+pivot_offset = Vector2(85, 14)
+theme_override_font_sizes/font_size = 30
+text = "10x"
+horizontal_alignment = 2
+
+[node name="PointsContainer" type="Control" parent="GUI2/Score/VBoxContainer/HBoxContainer" index="1"]
+custom_minimum_size = Vector2(100, 28)
+layout_mode = 2
+
+[node name="Points" type="Label" parent="GUI2/Score/VBoxContainer/HBoxContainer/PointsContainer" index="0"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 90.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 30
+text = "1337"
