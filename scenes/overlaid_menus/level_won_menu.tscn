@@ -5,3 +5,6 @@
 
 [node name="LevelWonMenu" instance=ExtResource("1_u6s5d")]
 script = ExtResource("2_wqvle")
+
+[node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
+theme_override_font_sizes/normal_font_size = 40

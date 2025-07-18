@@ -10,6 +10,7 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERH
 @onready var hitbox: Area2D = $Hitbox
 @onready var wall_hitbox: Area2D = $WallHitbox
 @onready var sound: PlayerSounds = $PlayerSounds
+@onready var sound_splatter: AudioQueueRandom = $SplatterSounds
 @onready var effects: PlayerEffects = $PlayerEffects
 
 const JUMP_VELOCITY = -500.0
@@ -265,6 +266,8 @@ func _on_hitbox_hit(body):
 	_heat += HEAT_BUILD_KILL
 	enemy.kill()
 
+	sound_splatter.play_random()
+
 	Events.score_points.emit(_tacho * 100)
 	Events.camera_freez_frame.emit()
 	Events.camera_shake.emit(0.4)
@@ -272,3 +275,5 @@ func _on_hitbox_hit(body):
 
 func _on_wall_hitbox_hit(_body):
 	Events.player_hit_wall.emit()
+
+	sound.play_sound_effect("hit_wall")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://5kyqpec60060"]
+[gd_scene load_steps=62 format=3 uid="uid://5kyqpec60060"]
 
 [ext_resource type="Script" uid="uid://d0tlyt7dkp07u" path="res://game/entities/player/player.gd" id="1_gqtae"]
 [ext_resource type="Texture2D" uid="uid://bk3yen8ulgx3n" path="res://assets/self-made/player-sprite-sheet.png" id="2_x4rrl"]
@@ -10,6 +10,18 @@
 [ext_resource type="Script" uid="uid://cjpb55pp0l03r" path="res://game/entities/player/player_sounds.gd" id="6_igs2l"]
 [ext_resource type="AudioStream" uid="uid://dh2734fp0co0n" path="res://assets/sounds/chainsaw-accelerate.mp3" id="6_kn1iv"]
 [ext_resource type="Texture2D" uid="uid://c2pel5k2bj1b4" path="res://assets/Free Effect Bullet Impact Explosion 32x32 V1/Red Effect Bullet Impact Explosion 32x32.png" id="7_dhej3"]
+[ext_resource type="AudioStream" uid="uid://kuhg3ggm8j82" path="res://assets/impact_-_starninjas/impact.1.ogg" id="11_fq5t3"]
+[ext_resource type="Script" uid="uid://jaiupexlaeby" path="res://game/audio/audio_queue_random.gd" id="11_p5qu6"]
+[ext_resource type="AudioStream" uid="uid://c6gofjmyvneu8" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crach12_-00.mp3" id="13_cq8ym"]
+[ext_resource type="AudioStream" uid="uid://wytonvey6wpv" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crach12_-01.mp3" id="14_1s5sw"]
+[ext_resource type="AudioStream" uid="uid://c4f28jfbgorae" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crach12_-02.mp3" id="15_588tj"]
+[ext_resource type="AudioStream" uid="uid://dylbp2nvbrly7" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crach12_-03.mp3" id="16_hnip2"]
+[ext_resource type="AudioStream" uid="uid://bfyklmyoe8a4u" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crach12_-04.mp3" id="17_0f2w8"]
+[ext_resource type="AudioStream" uid="uid://cmqnuamqh3w10" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crack11-00.mp3" id="18_6strl"]
+[ext_resource type="AudioStream" uid="uid://bgi1givogdagj" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crack11-01.mp3" id="19_tv6ny"]
+[ext_resource type="AudioStream" uid="uid://cefodw663d2jv" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crack11-02.mp3" id="20_2vc1s"]
+[ext_resource type="AudioStream" uid="uid://dgyudb42al262" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crack11-03.mp3" id="21_k6116"]
+[ext_resource type="AudioStream" uid="uid://dr7f5kb2arqr3" path="res://assets/independent_nu_ljudbank-extreme_splatter/extreme_splatter/crack11-04.mp3" id="22_so4hh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cjd1f"]
 atlas = ExtResource("2_x4rrl")
@@ -255,7 +267,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"charge",
-"speed": 10.0
+"speed": 25.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -341,7 +353,8 @@ debug_color = Color(0, 0.644813, 0.273308, 0.42)
 visible = false
 position = Vector2(-1, -1)
 sprite_frames = SubResource("SpriteFrames_xt77v")
-animation = &"boost"
+animation = &"charge"
+frame_progress = 0.469553
 offset = Vector2(10.835, 0.915)
 script = ExtResource("5_igs2l")
 
@@ -350,6 +363,7 @@ script = ExtResource("6_igs2l")
 
 [node name="EnigneOffSoundEffect" type="AudioStreamPlayer2D" parent="PlayerSounds"]
 stream = ExtResource("3_x4rrl")
+volume_db = 15.0
 bus = &"SFX"
 
 [node name="EnigneOnSoundEffect" type="AudioStreamPlayer2D" parent="PlayerSounds"]
@@ -362,4 +376,72 @@ bus = &"SFX"
 
 [node name="EnigneAccelerateSoundEffect" type="AudioStreamPlayer2D" parent="PlayerSounds"]
 stream = ExtResource("6_kn1iv")
+bus = &"SFX"
+
+[node name="HitWallSound" type="AudioStreamPlayer2D" parent="PlayerSounds"]
+stream = ExtResource("11_fq5t3")
+bus = &"SFX"
+
+[node name="SplatterSounds" type="Node2D" parent="." node_paths=PackedStringArray("audio_streams")]
+script = ExtResource("11_p5qu6")
+audio_streams = [NodePath("Splatter1"), NodePath("Splatter2"), NodePath("Splatter3"), NodePath("Splatter4"), NodePath("Splatter5"), NodePath("Splatter6"), NodePath("Splatter7"), NodePath("Splatter8"), NodePath("Splatter9"), NodePath("Splatter10")]
+
+[node name="Splatter1" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("13_cq8ym")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter2" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("14_1s5sw")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter3" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("15_588tj")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter4" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("16_hnip2")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter5" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("17_0f2w8")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter6" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("18_6strl")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter7" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("19_tv6ny")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter8" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("20_2vc1s")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter9" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("21_k6116")
+volume_db = -10.785
+pitch_scale = 2.0
+bus = &"SFX"
+
+[node name="Splatter10" type="AudioStreamPlayer2D" parent="SplatterSounds"]
+stream = ExtResource("22_so4hh")
+volume_db = -10.785
+pitch_scale = 2.0
 bus = &"SFX"

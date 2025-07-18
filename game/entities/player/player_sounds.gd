@@ -6,7 +6,10 @@ extends Node2D
 	engine_off = $EnigneOffSoundEffect,
 	normal = $EnigneNormalSoundEffect,
 	accelerate = $EnigneAccelerateSoundEffect,
+	hit_wall = $HitWallSound,
 }
+
+var not_stopped_player = ["hit_wall"]
 
 var _last_sound_effect := ""
 
@@ -14,11 +17,18 @@ var _last_sound_effect := ""
 func play_sound_effect(sound_name: String):
 	for id in sound_effects.keys():
 		var audio_player := sound_effects[id] as AudioStreamPlayer2D
+
 		if id == sound_name:
-			if not audio_player.playing:
-				audio_player.play()
-				_last_sound_effect = sound_name
+			if audio_player.playing:
+				continue
+
+			audio_player.play()
+			_last_sound_effect = sound_name
+
 		else:
+			if id in not_stopped_player:
+				continue
+
 			audio_player.stop()
 
 

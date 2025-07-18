@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bfu8dg2lrbatg"
+path="res://.godot/imported/Roar3.wav-2571b0c7c097986e431b9d23f78e5e7a.sample"
+
+[deps]
+
+source_file="res://assets/zombie_sounds/Zombie Sounds/Roar3.wav"
+dest_files=["res://.godot/imported/Roar3.wav-2571b0c7c097986e431b9d23f78e5e7a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

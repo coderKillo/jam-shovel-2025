@@ -10,5 +10,5 @@ script = ExtResource("2_wvmyj")
 
 [node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
 modulate = Color(1, 0.21, 0.21, 1)
-theme_override_font_sizes/normal_font_size = 35
+theme_override_font_sizes/normal_font_size = 40
 text = "[center]You Overheated![/center]"
