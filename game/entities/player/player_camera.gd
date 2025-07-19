@@ -1,7 +1,7 @@
 class_name PlayerCamera
 extends Camera2D
 
-const CAMERA_MAX_ZOOM = 1.0
+const CAMERA_MAX_ZOOM = 0.66
 const CAMERA_MIN_ZOOM = 2.0
 const CAMERA_MAX_OFFSET = -100.0
 const CAMERA_MIN_OFFSET = 90.0

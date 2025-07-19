@@ -6,6 +6,7 @@ signal level_lost
 @onready var camera: PlayerCamera = $Camera2D
 @onready var player: Player = $Player
 @onready var level_complete_area: Area2D = $LevelCompleteArea
+@onready var level_death_area: Area2D = $DeathZone
 
 var level_state: LevelState
 var score: Score
@@ -19,9 +20,18 @@ func _ready():
 
 	player.overheat.connect(_on_player_overheat)
 	level_complete_area.body_entered.connect(_on_level_complete)
+	level_death_area.body_entered.connect(_on_player_died)
 
 
 func _on_player_overheat():
+	level_lost.emit()
+
+
+func _on_player_died(_body):
+	# run level without UI
+	if not is_instance_valid(score):
+		get_tree().quit()
+		return
 	level_lost.emit()
 
 

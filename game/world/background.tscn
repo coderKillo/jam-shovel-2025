@@ -47,10 +47,11 @@ repeat_times = 3
 texture = ExtResource("4_xstdg")
 
 [node name="Parallax2D5" type="Parallax2D" parent="."]
-scroll_offset = Vector2(0, -160)
+scroll_offset = Vector2(0, 46.9)
 repeat_size = Vector2(1080, 0)
 repeat_times = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D5"]
+position = Vector2(0, 58)
 texture = ExtResource("5_638y7")
 region_rect = Rect2(0, 0, 1080, 496)

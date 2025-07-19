@@ -275,5 +275,4 @@ func _on_hitbox_hit(body):
 
 func _on_wall_hitbox_hit(_body):
 	Events.player_hit_wall.emit()
-
 	sound.play_sound_effect("hit_wall")
