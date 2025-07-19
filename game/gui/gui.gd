@@ -7,6 +7,7 @@ extends Control
 @onready var speedometer: Speedometer = $Speedometer
 @onready var speed_line: Control = $Effects/SpeedLine
 @onready var score: Score = $Score
+@onready var level_label: Label = $LevelLabel
 
 var player: Player
 
@@ -45,6 +46,7 @@ func _on_level_loaded():
 func _on_level_ready():
 	player = level_loader.current_level.player
 	level_loader.current_level.score = score
+	level_label.text = "1-%s" % GameState.get_current_level()
 
 
 func _on_tutorial_active(active: bool):

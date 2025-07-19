@@ -32,6 +32,7 @@ func _ready():
 
 	_combo_tween = get_tree().create_tween()
 	_combo_tween.set_loops()
+	_combo_tween.bind_node(combo_label)
 	_combo_tween.tween_property(combo_label, "rotation_degrees", 15.0, 1.0).from(-15.0)
 	_combo_tween.tween_property(combo_label, "rotation_degrees", -15.0, 1.0).from(15.0)
 

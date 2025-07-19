@@ -243,3 +243,19 @@ offset_bottom = 307.0
 theme_override_font_sizes/font_size = 40
 text = "100"
 horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -27.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "0-1"
+horizontal_alignment = 2

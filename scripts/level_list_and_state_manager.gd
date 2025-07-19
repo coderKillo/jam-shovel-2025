@@ -19,5 +19,4 @@ func _advance_level() -> bool:
 
 func _setup_screen(instance: Node):
 	var level_scene_path = level_list_loader.get_level_file(GameState.get_current_level())
-	print(level_scene_path)
 	instance.setup(GameState.get_level_state(level_scene_path))
