@@ -20,6 +20,7 @@ text = "Tutorial (Jump I)"
 visible = true
 
 [node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
-text = "Press [ Space ] to Jump"
+text = "Press [ Space ] to Jump
+You can only jump is the engine is on!"
 fit_content = true
 horizontal_alignment = 1
