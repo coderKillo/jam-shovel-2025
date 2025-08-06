@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://2n5iwlhbb8q6"]
+[gd_scene load_steps=2 format=3 uid="uid://c4sjwcx6n56dk"]
 
-[ext_resource type="PackedScene" uid="uid://wny2d8dvp3ok" path="res://addons/maaacks_game_template/base/scenes/overlaid_menu/overlaid_menu.tscn" id="1_hy5iy"]
+[ext_resource type="PackedScene" uid="uid://wny2d8dvp3ok" path="res://addons/maaacks_game_template/base/scenes/overlaid_menu/overlaid_menu.tscn" id="1_b0d6d"]
 
-[node name="Tutorial1" instance=ExtResource("1_hy5iy")]
+[node name="Tutorial1" instance=ExtResource("1_b0d6d")]
 
 [node name="MenuPanelContainer" parent="." index="1"]
 offset_left = -206.0
@@ -14,16 +14,12 @@ offset_bottom = 76.0
 theme_override_constants/separation = 16
 
 [node name="TitleLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/TitleMargin" index="0"]
-text = "Tutorial (Acceleration I)"
+text = "Tutorial (Wall Run I)"
 
 [node name="DescriptionMargin" parent="MenuPanelContainer/MarginContainer/BoxContainer" index="1"]
 visible = true
 
 [node name="DescriptionLabel" parent="MenuPanelContainer/MarginContainer/BoxContainer/DescriptionMargin" index="0"]
-text = "while the engine is running 
-Press and hold 
-[ w ] or [ D ]
-to accelerate
-[color=red] watch out for overheating the engine !"
+text = "You Can also run on walls"
 fit_content = true
 horizontal_alignment = 1

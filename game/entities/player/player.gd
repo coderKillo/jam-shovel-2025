@@ -16,6 +16,7 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERH
 const JUMP_VELOCITY = -500.0
 
 const SPEED = 200.0
+const WALL_SPEED = 0.0
 const MAX_SPEED = 800.0
 
 const TACHO_MAX = 1.0
@@ -57,10 +58,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-
-	_speed = velocity.x
+	_speed = velocity.y if is_on_wall() else velocity.x
 	_acceleration = false
 
 	_update_animation()
@@ -91,13 +89,15 @@ func _physics_process(delta):
 				_launching(delta)
 
 		PlayerState.ENGINE_ON:
-			if Input.is_action_pressed("move_right") and is_on_floor():
+			if Input.is_action_pressed("move_right") and is_grounded():
 				_move_boost(delta)
 			else:
 				_move_normal(delta)
 
-			if Input.is_action_just_pressed("jump") and is_on_floor():
-				_jump(delta)
+			if Input.is_action_just_pressed("jump") and is_grounded():
+				_jump(JUMP_VELOCITY, delta)
+			elif velocity.y < 0 and not is_grounded():
+				_jump(0, delta)
 
 		PlayerState.OVERHEAT:
 			_overheat(delta)
@@ -108,7 +108,13 @@ func _physics_process(delta):
 	_update_speed(delta)
 
 	_speed = clamp(_speed, 0, MAX_SPEED)
-	velocity.x = _speed
+	if is_on_wall():
+		velocity.y = -_speed
+	else:
+		velocity.x = _speed
+
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 
 	move_and_slide()
 
@@ -121,6 +127,10 @@ func is_starting():
 
 func is_launching():
 	return _current_state == PlayerState.LAUNCHING
+
+
+func is_grounded() -> bool:
+	return is_on_wall() or is_on_floor()
 
 
 func _init_player():
@@ -169,6 +179,8 @@ func _starting(delta):
 
 func _move_normal(delta):
 	var new_speed = lerp(_speed, SPEED, delta)
+	if is_on_wall():
+		new_speed = _speed
 	_tacho = (new_speed / MAX_SPEED) * TACHO_MAX
 	sound.play_sound_effect("normal")
 	if _heat > HEAT_HOT_TRESHHOLD:
@@ -186,8 +198,8 @@ func _move_boost(delta):
 		effects.stop_effects()
 
 
-func _jump(_delta):
-	velocity.y = JUMP_VELOCITY
+func _jump(force, _delta):
+	velocity.y = min(force, velocity.y)
 	_current_state = PlayerState.ENGINE_OFF
 	sound.play_sound_effect("engine_off")
 
@@ -222,7 +234,7 @@ func _update_heat(delta):
 	elif _tacho < TACHO_THRESHOLD_COOL:
 		_heat -= HEAT_RELEASE_LOW_TACHO * delta
 
-	if _current_state == PlayerState.ENGINE_OFF and not is_on_floor():
+	if _current_state == PlayerState.ENGINE_OFF and not is_grounded():
 		_heat -= HEAT_RELEASE_IN_AIR * delta
 
 
@@ -245,7 +257,7 @@ func _update_animation():
 
 
 func _update_particles():
-	if _speed < (SPEED / 10.0) or not is_on_floor():
+	if _speed < (SPEED / 10.0) or not is_grounded():
 		particales.emitting = false
 	else:
 		particales.emitting = true
