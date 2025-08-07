@@ -40,7 +40,6 @@ func _process(_delta):
 
 func _on_level_loaded():
 	score.reset()
-	background_music.play()
 
 
 func _on_level_ready():
