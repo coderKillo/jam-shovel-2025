@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxqp0qk3fyvo6"]
+[gd_scene load_steps=8 format=3 uid="uid://dxqp0qk3fyvo6"]
 
+[ext_resource type="Script" uid="uid://bpurgfm0ykl2u" path="res://game/world/background.gd" id="1_h7ypb"]
 [ext_resource type="Texture2D" uid="uid://mfumerx4lv2j" path="res://assets/Wasteland City - Parallax Background/WCP_1.png" id="1_iyovw"]
 [ext_resource type="Texture2D" uid="uid://cforxkh0a361f" path="res://assets/Wasteland City - Parallax Background/WCP_0.png" id="1_upw84"]
 [ext_resource type="Texture2D" uid="uid://dvc2aiq4vf6v7" path="res://assets/Wasteland City - Parallax Background/WCP_2.png" id="2_upw84"]
@@ -8,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cnatv675uy0v0" path="res://assets/Wasteland City - Parallax Background/WCP_5.png" id="5_638y7"]
 
 [node name="Background" type="Node2D"]
+script = ExtResource("1_h7ypb")
 
 [node name="Parallax2D1" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.05, 1)
