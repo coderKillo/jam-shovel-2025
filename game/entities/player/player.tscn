@@ -306,6 +306,8 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 28
+floor_max_angle = 1.48353
+platform_floor_layers = 4294967288
 script = ExtResource("1_gqtae")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

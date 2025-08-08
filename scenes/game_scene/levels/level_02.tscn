@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ckdfxdu4eqob8" path="res://scenes/game_scene/levels/base/level_base.tscn" id="1_qga8p"]
 
-[node name="TestLevel" instance=ExtResource("1_qga8p")]
+[node name="TestLevel2" instance=ExtResource("1_qga8p")]
 
 [node name="LevelCompleteArea" parent="." index="3"]
 position = Vector2(7304, 11)

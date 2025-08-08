@@ -363,7 +363,7 @@ position = Vector2(97.5, 41)
 shape = SubResource("RectangleShape2D_rdvxg")
 
 [node name="Barn" type="StaticBody2D" parent="LevelCompleteArea"]
-position = Vector2(0, 1)
+position = Vector2(0, 2)
 collision_layer = 4
 collision_mask = 5
 
