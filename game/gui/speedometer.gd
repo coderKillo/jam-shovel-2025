@@ -12,8 +12,8 @@ var thermo_value = 0.0
 var speed_value = 0.0
 
 @onready var tacho_marker: Control = $TachoMarkerAxis
-@onready var thermo_marker: Control = $ThermoMarkerAxis
-@onready var speed_label: Label = $Speed
+@onready var thermo_marker: Control = $Thermo/ThermoMarkerAxis
+@onready var speed_label: Label = $Thermo/Speed
 
 const THERMO_MAX_ANGLE = 90
 const THERMO_MIN_ANGLE = -90

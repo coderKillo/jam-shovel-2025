@@ -6,6 +6,7 @@ extends Control
 
 @onready var speedometer: Speedometer = $Speedometer
 @onready var speed_line: Control = $Effects/SpeedLine
+@onready var heat_line: Control = $Effects/HeatLine
 @onready var score: Score = $Score
 @onready var level_label: Label = $LevelLabel
 
@@ -37,6 +38,11 @@ func _process(_delta):
 		"line_density", (player._speed / player.MAX_SPEED) * 0.5
 	)
 
+	heat_line.material.set_shader_parameter("line_density", player._heat / player.HEAT_MAX)
+	heat_line.material.set_shader_parameter(
+		"line_color", Color.RED * (player._heat / player.HEAT_MAX)
+	)
+
 
 func _on_level_loaded():
 	score.reset()
@@ -45,7 +51,12 @@ func _on_level_loaded():
 func _on_level_ready():
 	player = level_loader.current_level.player
 	level_loader.current_level.score = score
-	level_label.text = "1-%s" % GameState.get_current_level()
+	var level_scene_path = level_loader.get_level_file(GameState.get_current_level())
+	var file_name = level_scene_path.get_file()
+	if "tutorial" in file_name:
+		level_label.text = "0-%s" % file_name[-6]
+	else:
+		level_label.text = "1-%s" % file_name.substr(6, 2)
 
 
 func _on_tutorial_active(active: bool):

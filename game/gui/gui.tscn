@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dabwla87xkitx"]
+[gd_scene load_steps=18 format=3 uid="uid://dabwla87xkitx"]
 
 [ext_resource type="Script" uid="uid://d4b3ph47r8mb7" path="res://game/gui/score.gd" id="1_6a626"]
 [ext_resource type="Script" uid="uid://ddjjcmrv5vdlf" path="res://game/gui/gui.gd" id="1_dxgff"]
@@ -6,11 +6,29 @@
 [ext_resource type="PackedScene" uid="uid://dubai005q2xwd" path="res://game/effects/speed/speed_line.tscn" id="3_q68bo"]
 [ext_resource type="Script" uid="uid://sb50unh6wf7f" path="res://game/gui/speedometer.gd" id="4_6f60f"]
 [ext_resource type="Texture2D" uid="uid://cbu4agnp16ypp" path="res://assets/self-made/hud.png" id="5_odbam"]
+[ext_resource type="Shader" uid="uid://v6humif3dx8d" path="res://game/effects/speed/speed_lines.gdshader" id="5_q68bo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_86erd"]
 shader = ExtResource("2_dxgff")
 shader_parameter/pixel_size = 1.0
 shader_parameter/mix_sampling = 0
+
+[sub_resource type="Gradient" id="Gradient_6f60f"]
+colors = PackedColorArray(0.973535, 0.973535, 0.973535, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_odbam"]
+gradient = SubResource("Gradient_6f60f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fusf"]
+shader = ExtResource("5_q68bo")
+shader_parameter/noise = SubResource("GradientTexture1D_odbam")
+shader_parameter/line_color = Color(1, 0, 0, 1)
+shader_parameter/line_count = 0.0
+shader_parameter/line_density = 0.0
+shader_parameter/line_faloff = 1.0
+shader_parameter/mask_size = 0.0
+shader_parameter/mask_edge = 0.85
+shader_parameter/animation_speed = 0.5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ctytc"]
 atlas = ExtResource("5_odbam")
@@ -139,6 +157,15 @@ offset_bottom = 360.0
 grow_horizontal = 1
 grow_vertical = 1
 
+[node name="HeatLine" type="ColorRect" parent="Effects"]
+material = SubResource("ShaderMaterial_4fusf")
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [node name="Speedometer" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
@@ -200,25 +227,37 @@ rotation = -1.5708
 pivot_offset = Vector2(8, 20)
 texture = SubResource("AtlasTexture_cjd1f")
 
-[node name="ThermoBackground" type="TextureRect" parent="Speedometer"]
+[node name="Thermo" type="Control" parent="Speedometer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 300.0
+offset_right = 340.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ThermoBackground" type="TextureRect" parent="Speedometer/Thermo"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 273.0
-offset_right = 147.0
-offset_bottom = 313.0
+offset_left = -53.0
+offset_top = -59.0
+offset_right = 11.0
+offset_bottom = -19.0
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_152kc")
 
-[node name="ThermoMarkerAxis" type="Control" parent="Speedometer"]
+[node name="ThermoMarkerAxis" type="Control" parent="Speedometer/Thermo"]
 anchors_preset = 0
-offset_left = 136.0
-offset_top = 332.0
-offset_right = 146.0
-offset_bottom = 342.0
-rotation = -1.50447
+offset_right = 10.0
+offset_bottom = 10.0
+rotation = -1.53589
 pivot_offset = Vector2(5, 5)
 
-[node name="ThermoMarker" type="TextureRect" parent="Speedometer/ThermoMarkerAxis"]
+[node name="ThermoMarker" type="TextureRect" parent="Speedometer/Thermo/ThermoMarkerAxis"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -233,13 +272,13 @@ grow_vertical = 2
 scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_86erd")
 
-[node name="Speed" type="Label" parent="Speedometer"]
+[node name="Speed" type="Label" parent="Speedometer/Thermo"]
 modulate = Color(1, 0.874333, 0.42, 1)
 layout_mode = 0
-offset_left = 115.0
-offset_top = 270.0
-offset_right = 168.0
-offset_bottom = 307.0
+offset_left = -20.0
+offset_top = -62.0
+offset_right = 33.0
+offset_bottom = -25.0
 theme_override_font_sizes/font_size = 40
 text = "100"
 horizontal_alignment = 1
