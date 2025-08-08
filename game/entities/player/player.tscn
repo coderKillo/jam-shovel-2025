@@ -326,7 +326,6 @@ emitting = false
 amount = 30
 lifetime = 0.4
 fixed_fps = 0
-local_coords = true
 draw_order = 0
 process_material = SubResource("ParticleProcessMaterial_thxgm")
 

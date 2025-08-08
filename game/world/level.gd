@@ -24,6 +24,10 @@ func _ready():
 
 
 func _on_player_overheat():
+	# run level without UI
+	if not is_instance_valid(score):
+		get_tree().quit()
+		return
 	level_lost.emit()
 
 

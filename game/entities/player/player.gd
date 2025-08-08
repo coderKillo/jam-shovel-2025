@@ -12,6 +12,7 @@ enum PlayerState { IDLE, ENGINE_ON, ENGINE_OFF, LAUNCHING, ENGINE_STARTED, OVERH
 @onready var sound: PlayerSounds = $PlayerSounds
 @onready var sound_splatter: AudioQueueRandom = $SplatterSounds
 @onready var effects: PlayerEffects = $PlayerEffects
+@onready var ragdoll_scene: PackedScene = preload("res://game/entities/player/player_ragdoll.tscn")
 
 const JUMP_VELOCITY = -500.0
 
@@ -100,7 +101,7 @@ func _physics_process(delta):
 				_jump(0, delta)
 
 		PlayerState.OVERHEAT:
-			_overheat(delta)
+			_overheated(delta)
 		_:
 			pass
 
@@ -204,11 +205,26 @@ func _jump(force, _delta):
 	sound.play_sound_effect("engine_off")
 
 
-func _overheat(_delta):
+func _overheat():
+	_current_state = PlayerState.OVERHEAT
 	Engine.time_scale = 1.0
-	overheat.emit()
 	set_process(false)
 	set_physics_process(false)
+	hide()
+
+	var ragdoll := ragdoll_scene.instantiate() as RigidBody2D
+	get_parent().add_child(ragdoll)
+	ragdoll.global_position = global_position
+	ragdoll.linear_velocity = velocity
+	ragdoll.apply_force(Vector2(2, -10) * 50.0)
+
+	await get_tree().create_timer(2.0).timeout
+
+	overheat.emit()
+
+
+func _overheated(_delta):
+	pass
 
 	## end Handle Player State
 
@@ -221,7 +237,7 @@ func _set_tacho(value):
 func _set_heat(value):
 	_heat = clamp(value, 0, HEAT_MAX)
 	if _heat >= HEAT_MAX:
-		_current_state = PlayerState.OVERHEAT
+		_overheat()
 	return _heat
 
 
